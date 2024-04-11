@@ -37,3 +37,4 @@ class App(tk.Tk):
 
         self.home_frame = HomeFrame(self)
         self.home_frame.pack()
+        
