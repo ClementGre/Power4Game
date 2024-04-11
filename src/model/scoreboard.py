@@ -4,7 +4,7 @@ class Scoreboard:
     """
     format scores :
     {
-        "player1": [(23, 135, "2024-02-15 15:12:43"), ...], # (nb_played, time, score, date)
+        "player1": [(23, 135, 10, "2024-02-15 15:12:43"), ...], # (nb_played, time, difficulty, score, date)
     }
     """
 
@@ -23,17 +23,17 @@ class Scoreboard:
         """Sauvegarde les scores dans le fichier power4game_scores.json
         """
 
-    def add_score(self, player_name, nb_played, time, date):
+    def add_score(self, player_name, nb_played, time, date, difficulty):
         """Ajoute un score pour un joueur
         :return: score calculé
         """
 
-    def calculate_score(self, nb_played, time):
+    def calculate_score(self, nb_played, time, difficulty):
         """Calcule le score en fonction du nombre de coups joués et du temps
         :return: score calculé
         """
 
-    def get_best_scores(self, nb_best_scores=5, player_name=None, ):
+    def get_best_scores(self, nb_best_scores=5, player_name=None, difficulty=None):
         """Renvoie les meilleurs scores
         :param nb_best_scores: Nombre de meilleurs scores à renvoyer
         :type nb_best_scores: int
