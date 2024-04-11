@@ -32,3 +32,18 @@ class Game:
         :return: True si l'ordinateur a gagné, False sinon
         :rtype: bool
         """
+
+    def is_game_done(self):
+        """
+        :return: True si la partie est finie, False sinon
+        :rtype: bool
+        """
+        return self.nb_played == 42 or self.is_winner(1) or self.is_winner(2)
+
+    def is_winner(self, player):
+        """
+        Renvoie True si un joueur a réussi à aligner 4 pions.
+        :param player: joueur pour lequel on veut savoir s'il a gagné
+        :return: True si le joueur a gagné, False sinon
+        """
+        pass
