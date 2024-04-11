@@ -12,4 +12,3 @@ def get_computer_play_column(difficulty, grid):
 """
 Votre découpage fonctionnel interne ici
 """
-

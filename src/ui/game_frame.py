@@ -1,5 +1,6 @@
 import tkinter as tk
 
+
 class GameFrame(tk.Frame):
     def __init__(self, master):
         """
@@ -16,7 +17,6 @@ class GameFrame(tk.Frame):
 
         self.quit_button = tk.Button(self, text="Quit", command=self.quit)
         self.quit_button.pack()
-
 
     def quit(self):
         self.master.end_game()
