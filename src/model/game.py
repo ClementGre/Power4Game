@@ -25,11 +25,11 @@ class Game:
 
     def play(self, column, is_player):
         """
-        :param column: colonne dans laquelle l'ordinateur veut jouer
+        :param column: colonne dans laquelle on veut jouer
         :type column: int
         :param is_player: True si c'est le joueur qui joue, False si c'est l'ordinateur
         :type is_player: bool
-        :return: True si l'ordinateur a gagné, False sinon
+        :return: True si l'entité qui a joué a gagné, False sinon
         :rtype: bool
         """
 
@@ -42,8 +42,8 @@ class Game:
 
     def is_winner(self, player):
         """
-        Renvoie True si un joueur a réussi à aligner 4 pions.
-        :param player: joueur pour lequel on veut savoir s'il a gagné
+        Renvoie True si l'entité a réussi à aligner 4 pions.
+        :param player: True si on veut savoir si c'est le joueur qui a gagné, False si c'est l'ordinateur qui a gagné.
         :return: True si le joueur a gagné, False sinon
         """
         pass
