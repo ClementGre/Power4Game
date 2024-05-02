@@ -6,8 +6,8 @@ class HomeButtonsFrame(tk.Frame):
         """
         :type master: GameFrame
         """
-        super().__init__(master)
-        self.pack()
+        super().__init__(master, bg="red", height=40)
+        self.pack(side=tk.LEFT, fill=tk.X, expand=True)
         self.buttons = []
         self.create_widgets()
 

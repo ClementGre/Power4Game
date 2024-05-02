@@ -6,8 +6,8 @@ class ScoreboardFrame(tk.Frame):
         """
         :type master: GameFrame
         """
-        super().__init__(master)
-        self.pack()
+        super().__init__(master, bg="blue")
+        self.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
         self.buttons = []
         self.create_widgets()
 

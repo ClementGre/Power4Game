@@ -19,16 +19,15 @@ class App(tk.Tk):
         self.game_frame = None
 
         self.home_frame = HomeFrame(self)
-        self.home_frame.pack()
 
-        self.after(1000, self.start_game)
+        # self.after(1000, self.start_game)
 
         self.mainloop()
 
-    def start_game(self):
+    def start_game(self, difficulty, player_name, is_player_red):
         self.home_frame.destroy()
 
-        self.game_frame = GameFrame(self)
+        self.game_frame = GameFrame(self, difficulty, player_name, is_player_red)
         self.game_frame.pack()
 
     def end_game(self):
@@ -37,4 +36,4 @@ class App(tk.Tk):
 
         self.home_frame = HomeFrame(self)
         self.home_frame.pack()
-        
+

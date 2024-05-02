@@ -6,12 +6,16 @@ class GameButtonsFrame(tk.Frame):
         """
         :type master: GameFrame
         """
-        super().__init__(master)
-        self.pack()
+        super().__init__(master, bg="red", height=40)
+        self.pack(side=tk.LEFT, fill=tk.X, expand=True)
         self.buttons = []
         self.create_widgets()
 
     def create_widgets(self):
-        pass
+        self.buttons.append(tk.Button(self, text="Quit", command=self.quit))
+        self.buttons[-1].pack()
+
+    def quit(self):
+        self.master.end_game()
 
 
