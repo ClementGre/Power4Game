@@ -1,2 +1,4 @@
 # Exclude all __pycache__ directories
 /**/__pycache__/*
+# Exclude all .DS_Store files
+.DS_Store
