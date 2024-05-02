@@ -7,5 +7,6 @@ class GameCanvas(tk.Canvas):
         :type master: GameFrame
         """
         super().__init__(master)
+        self.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
 
