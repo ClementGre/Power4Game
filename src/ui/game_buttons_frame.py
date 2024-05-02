@@ -13,7 +13,7 @@ class GameButtonsFrame(tk.Frame):
 
     def create_widgets(self):
         self.buttons.append(tk.Button(self, text="Quit", command=self.quit))
-        self.buttons[-1].pack()
+        self.buttons[-1].pack(side=tk.RIGHT)
 
     def quit(self):
         self.master.end_game()

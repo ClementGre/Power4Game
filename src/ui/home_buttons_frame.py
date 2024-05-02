@@ -12,4 +12,5 @@ class HomeButtonsFrame(tk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        pass
+        self.buttons.append(tk.Button(self, text="Quit", command=self.master.quit))
+        self.buttons[-1].pack(side=tk.RIGHT)

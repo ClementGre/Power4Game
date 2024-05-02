@@ -11,7 +11,7 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Power4Game")
-        self.geometry("300x200")
+        self.geometry("800x500")
 
         self.scoreboard = Scoreboard()
 

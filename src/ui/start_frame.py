@@ -10,7 +10,8 @@ class StartFrame(tk.Frame):
         super().__init__(master, bg="yellow")
         self.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
-        self.difficulty = 0
+        self.difficulty = tk.IntVar(value=2)
+        self.player_name = tk.StringVar(value="")
         self.widgets = []
 
         self.create_widgets()
@@ -22,16 +23,27 @@ class StartFrame(tk.Frame):
         self.widgets.append(tk.Label(self, text="Please select the game difficulty"))
         self.widgets[-1].pack()
 
-        # scale widget for difficulty
-        self.widgets.append(tk.Scale(self, from_=1, to=10, orient=tk.HORIZONTAL))
+        self.widgets.append(tk.Scale(self, from_=1, to=10, orient=tk.HORIZONTAL, variable=self.difficulty))
         self.widgets[-1].pack()
 
-        self.widgets.append(tk.Button(self, text="Play", command=self.play_button_clicked))
+        # name entry
+        self.widgets.append(tk.Label(self, text="Enter your name"))
+        self.widgets[-1].pack()
+        self.widgets.append(tk.Entry(self, textvariable=self.player_name))
         self.widgets[-1].pack()
 
+        self.widgets.append(tk.Button(self, text="Play as Red", command=self.play_as_red))
+        self.widgets[-1].pack()
 
-        self.quit_button = tk.Button(self, text="Quit", command=self.quit)
-        self.quit_button.pack()
+        self.widgets.append(tk.Button(self, text="Play as Yellow", command=self.play_as_yellow))
+        self.widgets[-1].pack()
 
-    def play_button_clicked(self):
-        self.master.start_game(self.widgets[2].get(), "r_name", True)
+    def get_player_name(self):
+        player_name = self.player_name.get()
+        return "Unknown" if player_name == "" else player_name
+
+    def play_as_red(self):
+        self.master.start_game(self.difficulty.get(), self.get_player_name(), True)
+
+    def play_as_yellow(self):
+        self.master.start_game(self.difficulty.get(), self.get_player_name(), False)
