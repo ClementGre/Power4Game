@@ -9,7 +9,7 @@ from src.ui.start_frame import StartFrame
 class HomeFrame(tk.Frame):
 
     def __init__(self, master):
-        super().__init__(master)
+        super().__init__(master, bg="#E2E2E2")
         self.pack(fill=tk.BOTH, expand=True)
 
         self.widgets = []

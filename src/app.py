@@ -11,7 +11,7 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Power4Game")
-        self.geometry("800x500")
+        self.geometry("900x600")
 
         self.scoreboard = Scoreboard()
 
@@ -19,6 +19,7 @@ class App(tk.Tk):
         self.game_frame = None
 
         self.home_frame = HomeFrame(self)
+        # self.wm_attributes("-transparentcolor", "green")
 
         # self.after(1000, self.start_game)
 
@@ -36,4 +37,3 @@ class App(tk.Tk):
 
         self.home_frame = HomeFrame(self)
         self.home_frame.pack()
-

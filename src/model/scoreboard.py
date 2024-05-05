@@ -75,6 +75,8 @@ class Scoreboard:
         :param player_name: Nom du joueur pour lequel on veut récupérer les meilleurs scores,
             si None, on récupère les meilleurs scores de tous les joueurs
         :type player_name: str
+        :param difficulty: Difficulté pour laquelle on veut récupérer les meilleurs scores,
+            si None, on récupère les meilleurs scores pour toutes les difficultés
         """
         best_scores = []
         for i in range(0, nb_best_scores):
