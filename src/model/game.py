@@ -32,6 +32,8 @@ class Game:
         :return: True si l'entité qui a joué a gagné, False sinon
         :rtype: bool
         """
+        
+        
 
     def is_game_done(self):
         """
@@ -46,4 +48,4 @@ class Game:
         :param player: True si on veut savoir si c'est le joueur qui a gagné, False si c'est l'ordinateur qui a gagné.
         :return: True si le joueur a gagné, False sinon
         """
-        pass
+        
