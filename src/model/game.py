@@ -21,7 +21,10 @@ class Game:
         """
         :return: True si c'est au joueur de jouer, False si c'est à l'ordinateur
         """
-        return self.is_player_red if self.nb_played % 2 == 0 else not self.is_player_red
+        if self.nb_played % 2 == 0 :
+            return self.is_player_red 
+        else :
+            return not self.is_player_red
 
     def play(self, column, is_player):
         """
@@ -32,20 +35,51 @@ class Game:
         :return: True si l'entité qui a joué a gagné, False sinon
         :rtype: bool
         """
+        res = False
         
+        #Colonne
+        for i in range(3):
+            if self.grid[i][column]==self.grid[i+1][column]==self.grid[i+2][column]==self.grid[i+3][column] :
+                res = True
+                
+        #Ligne
+        row = 0
+        while row <= 5 and self.grid[row][column] == 0 :
+            row += 1
+           
+        for i in range(4):
+            if self.grid[row][i] == self.grid[row][i+1]==self.grid[row][i+2]==self.grid[row][i+3] :
+                res = True
+                
+        #Diagonale Nord-Ouest/Sud-Est
+        i = 0
+        while (row-i) >= 0 and (column-i) >= 0 and (self.grid[row-i][column-i] == self.grid[row][column]) :
+            i += 1
+        j = 0
+        while (row+j) <= 5 and (column+j) <= 6 >= 0 and (self.grid[row+j][column+j] == self.grid[row][column]) :
+            j += 1
+        if (i+j) >= 3 :
+            res = True
+            
+        #Diagonale Nord-Est/Sud-Ouest
+        i = 0
+        while (row-i) >= 0 and (column+i) <= 6 and (self.grid[row-i][column+i] == self.grid[row][column]) :
+            i += 1
+        j = 0
+        while (row+j) <= 5 and (column-j) >= 0 and (self.grid[row+j][column-j] == self.grid[row][column]) :
+            j += 1
+        if (i+j) >= 3 :
+            res = True
         
-
+        return res
+    
     def is_game_done(self):
         """
         :return: True si la partie est finie, False sinon
         :rtype: bool
         """
-        return self.nb_played == 42 or self.is_winner(1) or self.is_winner(2)
+        res = False  
+        if self.nb_played == 42 or self.play :
+            res = True
+        return res
 
-    def is_winner(self, player):
-        """
-        Renvoie True si l'entité a réussi à aligner 4 pions.
-        :param player: True si on veut savoir si c'est le joueur qui a gagné, False si c'est l'ordinateur qui a gagné.
-        :return: True si le joueur a gagné, False sinon
-        """
-        
