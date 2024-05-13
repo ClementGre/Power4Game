@@ -7,7 +7,7 @@ class StartFrame(tk.Frame):
         """
         :type master: GameFrame
         """
-        super().__init__(master, bg="#f0f0f0", pady=10)
+        super().__init__(master, pady=10)
         self.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
         self.difficulty = tk.IntVar(value=2)
