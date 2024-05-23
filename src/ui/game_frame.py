@@ -1,5 +1,6 @@
 import tkinter as tk
 
+from src.model.game import Game
 from src.ui.app_buttons_frame import AppButtonsFrame
 from src.ui.game_buttons_frame import GameButtonsFrame
 from src.ui.game_canvas import GameCanvas
@@ -13,6 +14,8 @@ class GameFrame(tk.Frame):
         """
         super().__init__(master)
         self.pack(fill=tk.BOTH, expand=True)
+
+        self.game = Game(player_name, is_player_red)
 
         self.widgets = []
         self.create_widgets()

@@ -53,9 +53,9 @@ class Game:
         row = 0
         while row <= 5 and self.grid[row][column] == 0:
             row += 1
-        
+
         row -= 1
-        self.grid[row][column] == n
+        self.grid[row][column] = n
 
         # Colonne
         for i in range(3):
@@ -63,6 +63,10 @@ class Game:
                 return True
 
         # Ligne
+        row = 0
+        while row <= 5 and self.grid[row][column] == 0:
+            row += 1
+
         for i in range(4):
             if self.grid[row][i] == self.grid[row][i + 1] == self.grid[row][i + 2] == self.grid[row][i + 3]:
                 return True
@@ -87,6 +91,7 @@ class Game:
         if (i + j) >= 3:
             return True
 
+        return False
 
     def is_game_done(self):
         """

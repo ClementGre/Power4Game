@@ -20,7 +20,6 @@ class App(tk.Tk):
 
         self.home_frame = HomeFrame(self)
         # self.wm_attributes("-transparentcolor", "green")
-
         # self.after(1000, self.start_game)
 
         self.mainloop()
