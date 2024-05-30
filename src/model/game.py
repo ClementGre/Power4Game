@@ -61,8 +61,9 @@ class Game:
             
         else : 
             return(False,None)
-            
-        
+
+        self.nb_played += 1
+
         # Colonne
         for i in range(3):
             if self.grid[i][column] == self.grid[i + 1][column] == self.grid[i + 2][column] == self.grid[i + 3][column]:

@@ -27,9 +27,12 @@ class GameFrame(tk.Frame):
         self.time = 0
         self.after(10, self.update_time)
 
+        if not self.game.is_player_turn():
+            self.after(500, self.computer_play)
+
     def update_time(self):
         self.time = time() - self.start_time
-        self.widgets[0].update_time(self.time)
+        self.widgets[2].update_time(self.time)
         self.after(10, self.update_time)
 
     def create_widgets(self):
@@ -53,8 +56,7 @@ class GameFrame(tk.Frame):
             self.end_game()
             return False
 
-        # run after a second
-        self.after(1000, self.computer_play)
+        self.after(500, self.computer_play)
         return True
 
     def computer_play(self):
