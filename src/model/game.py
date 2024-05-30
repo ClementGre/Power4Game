@@ -25,8 +25,6 @@ class Game:
             return self.is_player_red
         else:
             return not self.is_player_red
-    
-    def 
 
     def play(self, column, is_player):
         """
