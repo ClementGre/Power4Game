@@ -56,6 +56,8 @@ class Game:
 
         row -= 1
         self.grid[row][column] = n
+        self.nb_played += 1
+        return False
 
         # Colonne
         for i in range(3):

@@ -48,27 +48,10 @@ class GameCanvas(tk.Canvas):
         if self.game_frame.player_play(x):
             self.update_board()
 
-    def update_time(self, time):
-        if len(self.find_withtag('time')) != 0:
-            self.delete('time')
-
-        minutes = int(time // 60)
-        seconds = int(time % 60)
-        if seconds < 10:
-            seconds = f"0{seconds}"
-        if minutes < 10:
-            minutes = f"0{minutes}"
-        self.bg_canvas.create_text(7 * self.UNIT + 2 * self.PANEL_MARGIN + 10, 10, text=f"{minutes}:{seconds}",
-                                   anchor="nw",
-                                   fill="black", font=("Helvetica", 16), tags="time")
-
     def create_widgets(self):
         # Draw the board: 8ux7u blue rectangle, and 8ux7u white ovals to make holes in the board
         self.create_rectangle(1.5, 1.5, 7 * self.UNIT + 2 * self.PANEL_MARGIN, 6 * self.UNIT + 2 * self.PANEL_MARGIN,
                               fill="#0029D9", outline="#506CE3", width=3)
-
-        # Write the time
-        self.update_time(0)
 
         self.update_board()
 
