@@ -50,16 +50,11 @@ class Game:
             else:
                 n = 1
 
-        row = -1
+        row = 0
         while row <= 5 and self.grid[row][column] == 0:
             row += 1
         
-        if row != -1 :
-            self.grid[row][column] = n
-            
-        else : 
-            return(False,None)
-
+        self.grid[row][column] = n
         self.nb_played += 1
 
         # Colonne
@@ -105,6 +100,5 @@ class Game:
         """
         res = False
         if self.nb_played == 42 :
-
             res = True
         return res

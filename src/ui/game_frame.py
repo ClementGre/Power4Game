@@ -68,6 +68,3 @@ class GameFrame(tk.Frame):
             self.after(500, self.end_game)
             return coordinates
 
-
-        return coordinates
-

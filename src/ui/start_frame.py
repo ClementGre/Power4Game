@@ -16,13 +16,13 @@ class StartFrame(tk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        self.widgets.append(tk.Label(self, text="Welcome to Power4Game", font=("Helvetica", 16), fg="#2D323B"))
+        self.widgets.append(tk.Label(self, text="Welcome to Power4Game", font=("Algerian", 16), fg="#2D323B"))
         self.widgets[-1].pack(pady=20)
 
         self.widgets.append(tk.Label(self, text="Please select the game difficulty"))
         self.widgets[-1].pack()
 
-        self.widgets.append(tk.Scale(self, from_=1, to=10, orient=tk.HORIZONTAL, variable=self.difficulty))
+        self.widgets.append(tk.Scale(self, from_=1, to=8, orient=tk.HORIZONTAL, variable=self.difficulty))
         self.widgets[-1].pack(pady=(0, 20))
 
         # name entry
