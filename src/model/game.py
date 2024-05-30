@@ -99,6 +99,6 @@ class Game:
         :rtype: bool
         """
         res = False
-        if self.nb_played == 42 or self.play:
+        if self.nb_played == 42:
             res = True
         return res

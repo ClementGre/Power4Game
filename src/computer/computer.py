@@ -1,3 +1,5 @@
+import random
+
 def get_computer_play_column(difficulty, grid):
     """Renvoie la colonne jouée par l'ordinateur en fonction de la difficulté et de la grille actuelle.
     Développé par : Elie et Maxence
@@ -10,6 +12,7 @@ def get_computer_play_column(difficulty, grid):
         2: joueur jaune
     :return: La colonne jouée par l'ordinateur
     """
+    return random.randint(0, 6)
 
 
 """

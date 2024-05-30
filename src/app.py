@@ -1,6 +1,8 @@
+import time
 import tkinter as tk
 
 from src.model.scoreboard import Scoreboard
+from src.model.scoreboard import calculate_score
 from src.ui.game_frame import GameFrame
 from src.ui.home_frame import HomeFrame
 
@@ -32,7 +34,13 @@ class App(tk.Tk):
 
     def end_game(self):
         # Logique de récupération du score et de sauvegarde
-        self.game_frame.destroy()
+        score = calculate_score(self.game_frame.game.nb_played, self.game_frame.time, self.game_frame.difficulty)
+        self.scoreboard.add_score(self.game_frame.game.player_name, self.game_frame.game.nb_played,
+                                  self.game_frame.time,
+                                  self.game_frame.difficulty, self.game_frame.game.is_player_red, score,
+                                  time.strftime("%d/%m/%Y %H:%M:%S"))
 
+        # Cleaning up the game frame
+        self.game_frame.destroy()
         self.home_frame = HomeFrame(self)
         self.home_frame.pack()
