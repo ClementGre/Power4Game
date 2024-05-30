@@ -45,30 +45,52 @@ class GameCanvas(tk.Canvas):
 
     def on_mouse_click(self, event):
         x = (event.x - self.PANEL_MARGIN) // self.UNIT
-        if self.game_frame.player_play(x):
-            self.update_board()
+        played = self.game_frame.player_play(x)
+        if played is not None:
+            self.add_token_animated(played[1], played[0], 1 if self.game.is_player_red else 2)
+            self.after(500, self.computer_play)
+
+    def computer_play(self):
+        played = self.game_frame.computer_play()
+        if played is not None:
+            self.add_token_animated(played[1], played[0], 2 if self.game.is_player_red else 1)
+
+    def add_token_animated(self, x, y, player, visible_y=0):
+        if visible_y < y:
+            self.set_token(x, y, player, visible_y=visible_y)
+
+            self.after(20, lambda: self.add_token_animated(x, y, player, visible_y + 1))
+            return
+
+        self.set_token(x, y, player)
 
     def create_widgets(self):
         # Draw the board: 8ux7u blue rectangle, and 8ux7u white ovals to make holes in the board
         self.create_rectangle(1.5, 1.5, 7 * self.UNIT + 2 * self.PANEL_MARGIN, 6 * self.UNIT + 2 * self.PANEL_MARGIN,
                               fill="#0029D9", outline="#506CE3", width=3)
-
-        self.update_board()
+        for x in range(7):
+            for y in range(6):
+                self.set_token(x, y, 0)
 
     def update_board(self):
-        if 'token' in self.gettags(self.find_withtag('token_played')):
-            self.delete('token_played')
         for x in range(7):
             for y in range(6):
                 self.set_token(x, y, self.game.grid[y][x])
 
-    def set_token(self, x, y, player):
+    def set_token(self, x, y, player, visible_y=-1):
+        if len(self.find_withtag(f"token_{x}_{y}")) != 0:
+            self.delete(f"token_{x}_{y}")
+
+        if visible_y == -1:
+            visible_y = y
+
         color = "red" if player == 1 else "yellow" if player == 2 else "white"
         self.create_oval(self.PANEL_MARGIN + x * self.UNIT - self.HOLE_MARGIN,
-                         self.PANEL_MARGIN + y * self.UNIT - self.HOLE_MARGIN,
+                         self.PANEL_MARGIN + visible_y * self.UNIT - self.HOLE_MARGIN,
                          self.PANEL_MARGIN + (x + 1) * self.UNIT + self.HOLE_MARGIN,
-                         self.PANEL_MARGIN + (y + 1) * self.UNIT + self.HOLE_MARGIN,
-                         fill=color, outline="#506CE3", width=3, tags=f"token_played")
+                         self.PANEL_MARGIN + (visible_y + 1) * self.UNIT + self.HOLE_MARGIN,
+                         fill=color, outline="#506CE3", width=3,
+                         tags="token_background" if player == 0 else f"token_{x}_{y}")
 
     def on_resize(self, event):
         self.setup_background(event.width, event.height)

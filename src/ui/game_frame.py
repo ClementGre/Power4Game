@@ -44,28 +44,30 @@ class GameFrame(tk.Frame):
         self.master.end_game()
 
     def player_play(self, column):
-        if not self.game.is_player_turn():
-            return True
+        if not self.game.is_player_turn() or self.game.is_game_done():
+            print("Player tried to play when it's not his turn or the game is done")
+            return None
 
-        if self.game.play(column, True) or self.game.is_game_done():
-            # Player wins game
-            self.end_game()
-            return False
+        (won, coordinates) = self.game.play(column, True)
+        if coordinates is None:
+            print("Player played in a full column")
+            return None
+        if won or self.game.is_game_done():
+            self.after(500, self.end_game)
+            return coordinates
 
-        if self.game.is_game_done():
-            self.end_game()
-            return False
-
-        self.after(500, self.computer_play)
-        return True
+        return coordinates
 
     def computer_play(self):
-        if self.game.play(get_computer_play_column(self.difficulty, self.game.grid), False):
+        (won, coordinates) = self.game.play(get_computer_play_column(self.difficulty, self.game.grid), False)
+        if coordinates is None:
+            throw(f"Computer play returned an invalid column {coordinates}")
+            return None
+        if won or self.game.is_game_done():
             # Computer wins game
-            self.end_game()
-            return False
+            self.after(500, self.end_game)
+            return coordinates
 
-        if self.game.is_game_done():
-            self.end_game()
 
-        self.widgets[0].update_board()
+        return coordinates
+
