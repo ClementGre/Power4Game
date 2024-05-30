@@ -9,7 +9,6 @@ class StartFrame(tk.Frame):
         """
         super().__init__(master, pady=10)
         self.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
-
         self.difficulty = tk.IntVar(value=2)
         self.player_name = tk.StringVar(value="")
         self.widgets = []

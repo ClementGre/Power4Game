@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import PhotoImage
 
 
 class GameButtonsFrame(tk.Frame):
@@ -12,7 +13,8 @@ class GameButtonsFrame(tk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        self.buttons.append(tk.Button(self, text="Resign", command=self.quit))
+        # self.buttons.append(tk.Button(self, text="Resign", command=self.quit)
+        self.buttons.append(tk.Button(self, image  = PhotoImage(file="src\res\Playb.png"), command=self.quit))
         self.buttons[-1].pack(side=tk.RIGHT, padx=10, pady=5)
 
     def quit(self):
