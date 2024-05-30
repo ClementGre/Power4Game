@@ -1,5 +1,14 @@
-import numpy as np
 import json
+
+import numpy as np
+
+
+def calculate_score(nb_played, time, difficulty):
+    """Calcule le score en fonction du nombre de coups joués et du temps
+    :return: score calculé
+    """
+    score = nb_played * np.exp(-time / difficulty) * 10 ** 4
+    return score
 
 
 class Scoreboard:
@@ -60,13 +69,6 @@ class Scoreboard:
             list_scores.insert(position + 1, score_now)
         else:
             self.scores[player_name] = [score_now]
-
-    def calculate_score(self, nb_played, time, difficulty):
-        """Calcule le score en fonction du nombre de coups joués et du temps
-        :return: score calculé
-        """
-        score = nb_played * np.exp(-time / difficulty) * 10 ** 4
-        return score
 
     def get_best_scores(self, nb_best_scores=5, player_name=None, difficulty=None):
         """Renvoie les meilleurs scores

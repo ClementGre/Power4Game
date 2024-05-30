@@ -93,12 +93,13 @@ class Game:
 
         return False
 
-    def is_game_done(self, column, is_player):
+    def is_game_done(self):
         """
         :return: True si la partie est finie, False sinon
         :rtype: bool
         """
         res = False
-        if self.nb_played == 42 or self.play(column, is_player):
+        if self.nb_played == 42 :
+
             res = True
         return res
