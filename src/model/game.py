@@ -37,7 +37,9 @@ class Game:
         :rtype: bool
         """
         # Insertion du jeton dans la colonne column
-
+        if self.grid[0,column] != 0 :
+            return (False,None)
+        
         n = 2
         if is_player:
             if self.is_player_red:
@@ -54,39 +56,35 @@ class Game:
         while row <= 5 and self.grid[row][column] == 0:
             row += 1
         
-        self.grid[row][column] = n
+        self.grid[row,column] = n
         self.nb_played += 1
 
         # Colonne
         for i in range(3):
-            if self.grid[i][column] == self.grid[i + 1][column] == self.grid[i + 2][column] == self.grid[i + 3][column]:
+            if self.grid[i,column] == self.grid[i + 1,column] == self.grid[i + 2,column] == self.grid[i + 3,column]:
                 return (True,(row,column))
 
         # Ligne
-        row = 0
-        while row <= 5 and self.grid[row][column] == 0:
-            row += 1
-
         for i in range(3):
-            if self.grid[row][i] == self.grid[row][i + 1] == self.grid[row][i + 2] == self.grid[row][i + 3]:
+            if self.grid[row,i] == self.grid[row,i + 1] == self.grid[row,i + 2] == self.grid[row,i + 3]:
                 return (True,(row,column))
 
         # Diagonale Nord-Ouest/Sud-Est
         i = 0
-        while (row - i) >= 0 and (column - i) >= 0 and (self.grid[row - i][column - i] == self.grid[row][column]):
+        while (row - i) >= 0 and (column - i) >= 0 and (self.grid[row - i,column - i] == self.grid[row,column]):
             i += 1
         j = 0
-        while (row + j) <= 5 and (column + j) <= 6 >= 0 and (self.grid[row + j][column + j] == self.grid[row][column]):
+        while (row + j) <= 5 and (column + j) <= 6 >= 0 and (self.grid[row + j,column + j] == self.grid[row,column]):
             j += 1
         if (i + j) >= 3:
             return (True,(row,column))
 
         # Diagonale Nord-Est/Sud-Ouest
         i = 0
-        while (row - i) >= 0 and (column + i) <= 6 and (self.grid[row - i][column + i] == self.grid[row][column]):
+        while (row - i) >= 0 and (column + i) <= 6 and (self.grid[row - i,column + i] == self.grid[row,column]):
             i += 1
         j = 0
-        while (row + j) <= 5 and (column - j) >= 0 and (self.grid[row + j][column - j] == self.grid[row][column]):
+        while (row + j) <= 5 and (column - j) >= 0 and (self.grid[row + j,column - j] == self.grid[row,column]):
             j += 1
         if (i + j) >= 3:
             return (True,(row,column))
