@@ -70,6 +70,13 @@ class Scoreboard:
         else:
             self.scores[player_name] = [score_now]
 
+    def calculate_score(self, nb_played, time, difficulty):
+        """Calcule le score en fonction du nombre de coups joués et du temps
+        :return: score calculé
+        """
+        score = nb_played * 10**(-time / (difficulty*1000)) 
+        return score
+
     def get_best_scores(self, nb_best_scores=5, player_name=None, difficulty=None):
         """Renvoie les meilleurs scores
         :param nb_best_scores: Nombre de meilleurs scores à renvoyer
