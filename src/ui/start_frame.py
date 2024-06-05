@@ -1,5 +1,7 @@
 import tkinter as tk
-
+from PIL import Image, ImageTk
+from tkinter import PhotoImage
+import os
 
 class StartFrame(tk.Frame):
 
@@ -19,7 +21,7 @@ class StartFrame(tk.Frame):
         self.widgets.append(tk.Label(self, text="Welcome to Power4Game", font=("Algerian", 16), fg="#2D323B"))
         self.widgets[-1].pack(pady=20)
 
-        self.widgets.append(tk.Label(self, text="Please select the game difficulty"))
+        self.widgets.append(tk.Label(self, text="Please select the difficulty level"))
         self.widgets[-1].pack()
 
         self.widgets.append(tk.Scale(self, from_=1, to=8, orient=tk.HORIZONTAL, variable=self.difficulty))
@@ -34,10 +36,23 @@ class StartFrame(tk.Frame):
         frame = tk.Frame(self)
         frame.pack(pady=20)
 
-        self.widgets.append(tk.Button(frame, text="Play as Red", command=self.play_as_red))
+        #Red button
+        # current_directory = os.getcwd()
+        # image_path = os.path.join(current_directory, "Power4Game", "src", "ui", "Quitter.png")
+        # if not os.path.exists(image_path):
+        #     print(f"Image file not found: {image_path}")
+        #     return
+        
+        # red = Image.open(image_path)
+        # red = ImageTk.PhotoImage(red)
+        
+        # red_button = tk.Button(self, command=self.master.quit, image=red, compound=tk.CENTER)
+        # red_button.image = red
+        # red_button.pack(side=tk.LEFT, padx=10)
+        self.widgets.append(tk.Button(frame, text="   ", command=self.play_as_red, bg = 'red'))
         self.widgets[-1].pack(side=tk.LEFT, padx=10)
 
-        self.widgets.append(tk.Button(frame, text="Play as Yellow", command=self.play_as_yellow))
+        self.widgets.append(tk.Button(frame, text="   ", command=self.play_as_yellow, bg = 'yellow'))
         self.widgets[-1].pack(side=tk.RIGHT, padx=10)
 
     def get_player_name(self):

@@ -18,7 +18,7 @@ class HomeFrame(tk.Frame):
         self.widgets.append(ScoreboardFrame(self))
         self.widgets.append(StartFrame(self))
         self.widgets.append(AppButtonsFrame(self))
-        self.widgets.append(HomeButtonsFrame(self))
+        # self.widgets.append(HomeButtonsFrame(self))
 
     def start_game(self, difficulty, player_name, is_player_red):
         self.master.start_game(difficulty, player_name, is_player_red)

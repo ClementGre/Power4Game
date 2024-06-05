@@ -33,7 +33,7 @@ class GameFrame(tk.Frame):
     def update_time(self):
         self.time = time() - self.start_time
         self.widgets[2].update_time(self.time)
-        self.after(10, self.update_time)
+        self.after(100, self.update_time)
 
     def create_widgets(self):
         self.widgets.append(GameCanvas(self))
@@ -61,7 +61,7 @@ class GameFrame(tk.Frame):
     def computer_play(self):
         (won, coordinates) = self.game.play(get_computer_play_column(self.difficulty, self.game.grid), False)
         if coordinates is None:
-            throw(f"Computer play returned an invalid column {coordinates}")
+            print(f"Computer play returned an invalid column {coordinates}")
             return None
         if won or self.game.is_game_done():
             # Computer wins game

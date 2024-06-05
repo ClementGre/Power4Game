@@ -73,7 +73,7 @@ class Scoreboard:
         """Calcule le score en fonction du nombre de coups joués et du temps
         :return: score calculé
         """
-        score = nb_played * 10**(-time / (difficulty*1000)) 
+        score = nb_played * 10**(-time / (difficulty*1e3)) 
         return score
 
     def get_best_scores(self, nb_best_scores=5, player_name=None, difficulty=None):

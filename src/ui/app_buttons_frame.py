@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import tkinter as tk
 
 
@@ -15,6 +16,9 @@ class AppButtonsFrame(tk.Frame):
     def create_widgets(self):
         self.buttons.append(tk.Button(self, text="FullScreen", command=self.fullscreen))
         self.buttons[-1].pack(side=tk.LEFT, padx=10, pady=5)
+        
+        self.buttons.append(tk.Button(self, text="❌", command=self.master.quit, font = ('Arial',8)))
+        self.buttons[-1].pack(side=tk.RIGHT, padx=10, pady=5)
 
     def fullscreen(self):
         self.master.master.attributes("-fullscreen", True)
