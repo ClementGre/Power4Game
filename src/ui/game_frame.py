@@ -89,6 +89,17 @@ class GameFrame(tk.Frame):
         response_lose = tk.messagebox.askokcancel("Confirmation", "Do you want to quit?")
         if response_lose:
             self.end_game()
+            
+    def messageBox_draw(self):
+        """
+        Affiche une boîte de dialogue de défaite et demande à l'utilisateur s'il souhaite quitter le jeu.
+
+        Si l'utilisateur clique sur "OK", la méthode end_game est appelée.
+        """
+        tk.messagebox.showinfo("Draw !!!", "Nice try")
+        response_lose = tk.messagebox.askokcancel("Confirmation", "Do you want to quit?")
+        if response_lose:
+            self.end_game()
 
     def player_play(self, column):
         """
@@ -104,14 +115,17 @@ class GameFrame(tk.Frame):
             return None
 
         (won, coordinates) = self.game.play(column, True)
-        while coordinates is None:
+        if coordinates is None:
             print("Player played in a full column")
-            (won, coordinates) = self.game.play(column, True)
             
         if won or self.game.is_game_done():
             print("Player won game" if won else "Game is done")
-            self.messageBox_won()
+            if won : 
+                self.messageBox_won()
+            if self.game.is_game_done() :
+                self.messageBox_draw()
             return coordinates
+        
         print("Player played in column", column, "token at coordinates", coordinates)
         
         return coordinates
@@ -127,10 +141,14 @@ class GameFrame(tk.Frame):
         while coordinates is None:
             print(f"Computer play returned an invalid column {coordinates}")
             (won, coordinates) = self.game.play(get_computer_play_column(self.difficulty, self.game.grid), False)
+        
         if won or self.game.is_game_done():
             # Computer wins game
             print("Computer won game" if won else "Game is done")
-            self.messageBox_lose()
+            if won : 
+                self.messageBox_lose()
+            if self.game.is_game_done() :
+                self.messageBox_draw()
             return coordinates
 
         print("Computer played in column", coordinates[1], "token at coordinates", coordinates)

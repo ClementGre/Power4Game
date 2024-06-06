@@ -37,7 +37,7 @@ class GameCanvas(tk.Canvas):
         self.game_frame = master
         self.game = master.game
         self.bg_image = Image.open("src/res/noise.png")
-        self.bg_canvas = tk.Canvas(master, width=700, height=600, highlightthickness=0, bg="#7B4D62")
+        self.bg_canvas = tk.Canvas(master, width=700, height=700, highlightthickness=0, bg="#7B4D62")
 
         self.canvas_window = None
         self.bg_canvas.pack(side=tk.BOTTOM, fill="both", expand=True)
@@ -46,13 +46,12 @@ class GameCanvas(tk.Canvas):
         super().__init__(self.bg_canvas, width=7 * self.UNIT + 2 * self.PANEL_MARGIN + 3,
                          height=6 * self.UNIT + 2 * self.PANEL_MARGIN + 3, highlightthickness=0)
 
+        self.circle = self.create_oval(0, 0, 0, 0, fill='black')
+
         self.bind("<Motion>", self.on_mouse_move)
         self.bind("<Leave>", self.on_mouse_leave)
         self.bind("<Button-1>", self.on_mouse_click)
         
-        # self.arrow = tk.Canvas.create_line(0, 0, 0, 6 * self.UNIT, arrow=tk.LAST, fill='red')
-        # self.label = tk.Canvas.create_text(0, -20, text='', fill='red')
-
         self.create_widgets()
 
     def on_mouse_move(self, event):
@@ -62,24 +61,26 @@ class GameCanvas(tk.Canvas):
         :param event: L'événement de mouvement de la souris.
         :type event: tk.Event
         """
-        pass
-        # cell_size = self.UNIT
-        # column = event.x // cell_size
-        # cols = 7 ; rows = 6
-        # if 0 <= column < cols:
-        #     self.bg_canvas.coords(self.arrow, column * cell_size + cell_size // 2, 0, 
-        #                   column * cell_size + cell_size // 2, rows * cell_size)
-        #     self.bg_canvas.coords(self.label, column * cell_size + cell_size // 2, -20)
-        #     self.bg_canvas.itemconfig(self.label, text=f'Colonne {column + 1}')
+        # Calculer la colonne sur laquelle la souris se trouve
+        col = event.x // self.UNIT
+        if 0 <= col < 7:
+            # Calculer les coordonnées du cercle
+            x1 = col * self.UNIT + self.PANEL_MARGIN + self.UNIT // 2 - 15
+            y1 = 10
+            x2 = col * self.UNIT + self.PANEL_MARGIN + self.UNIT // 2 + 15
+            y2 = 40
+
+            # Mettre à jour la position du cercle
+            self.coords(self.circle, x1, y1, x2, y2)
 
     def on_mouse_leave(self, event):
         """
-        Gère le départ de la souris du canevas du jeu.
+        Cache le cercle lorsque la souris quitte le canevas.
 
         :param event: L'événement de départ de la souris.
         :type event: tk.Event
         """
-        pass
+        self.coords(self.circle, 0, 0, 0, 0)
 
     def on_mouse_click(self, event):
         """
