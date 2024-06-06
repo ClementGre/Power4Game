@@ -76,7 +76,7 @@ class GameFrame(tk.Frame):
 
     def end_game(self):
         """
-        Gère la fin de la paritie
+        Gère la fin de la partie
         """
         if self.game.is_player_winner():
             do_quit = tk.messagebox.askokcancel("Victory!", "Player won game\Do you want to quit?")
