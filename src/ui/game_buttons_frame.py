@@ -1,5 +1,5 @@
 import tkinter as tk
-
+from src.utils.format import format_time_ms
 bg = "#DB1A3D"
 
 
@@ -23,16 +23,4 @@ class GameButtonsFrame(tk.Frame):
         self.buttons[0].config(text="Quit", command=self.master.master.end_game)
 
     def update_time(self, time):
-        minutes = int(time / 60)
-        seconds = int(time % 60)
-        ms = int(time * 1000) % 1000
-        if minutes < 10:
-            minutes = "0" + str(minutes)
-        if seconds < 10:
-            seconds = "0" + str(seconds)
-        if ms < 10:
-            ms = "00" + str(ms)
-        elif ms < 100:
-            ms = "0" + str(ms)
-
-        self.buttons[1].config(text=f"{minutes}:{seconds}")
+        self.buttons[1].config(text=format_time_ms(time))

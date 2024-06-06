@@ -57,7 +57,7 @@ class ScoreboardFrame(tk.Frame):
         self.scoreboard_frame_id = self.canvas.create_window((0, 0), window=self.scoreboard_frame, anchor="n")
 
         self.scoreboard_frame.grid_columnconfigure(0, weight=1)
-        self.scoreboard_frame.grid_columnconfigure(8, weight=1)
+        self.scoreboard_frame.grid_columnconfigure(9, weight=1)
 
         self.canvas.configure(yscrollcommand=self.scrollbar.set)
         self.canvas.bind('<Configure>', self.on_canvas_configure)
@@ -79,7 +79,7 @@ class ScoreboardFrame(tk.Frame):
             self.widgets.append(label)
             return
 
-        headers = ["Player name", "Nb played", "Time", "Difficulty", "Score", "Date"]
+        headers = ["Player name", "Token played", "Time", "Difficulty", "Played as red", "Score", "Date"]
         for col, header in enumerate(headers, start=1):
             label = tk.Label(self.scoreboard_frame, text=header, bg=bg)
             label.grid(row=0, column=col, padx=2, pady=2)
@@ -87,6 +87,8 @@ class ScoreboardFrame(tk.Frame):
 
         for row, data in enumerate(scores, start=1):
             for col, cell in enumerate(data, start=1):
+                if isinstance(cell, bool):
+                    cell = "✓" if cell else "✗"
                 label = tk.Label(self.scoreboard_frame, text=cell, bg=bg)
                 label.grid(row=row, column=col, padx=2, pady=2)
                 self.widgets.append(label)

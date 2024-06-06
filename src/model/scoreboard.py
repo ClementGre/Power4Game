@@ -1,5 +1,8 @@
 import json
+
 import numpy as np
+
+from src.utils.format import format_time_ms
 
 
 def calculate_score(nb_played, time, difficulty):
@@ -7,7 +10,7 @@ def calculate_score(nb_played, time, difficulty):
     :return: score calculé
     """
     score = nb_played * np.exp(-time / difficulty) * 10 ** 4
-    return score
+    return int(score)
 
 
 class Scoreboard:
@@ -52,14 +55,14 @@ class Scoreboard:
     def save_scores(self):
         """Sauvegarde les scores dans le fichier power4game_scores.json
         """
-        with open('power4game_scores', 'w', encoding='utf-8') as mon_fichier:
+        with open('power4game_scores.json', 'w', encoding='utf-8') as mon_fichier:
             json.dump(self.scores, mon_fichier)
 
     def add_score(self, player_name, nb_played, time, difficulty, is_red, score, date):
         """Ajoute un score pour un joueur
         :return: score calculé
         """
-        score = (nb_played, time, difficulty, is_red, score, date)
+        score = (nb_played, format_time_ms(time), difficulty, is_red, score, date)
         if player_name in self.scores.keys():
             self.scores[player_name].append(score)
         else:
@@ -71,7 +74,7 @@ class Scoreboard:
         """Calcule le score en fonction du nombre de coups joués et du temps
         :return: score calculé
         """
-        score = nb_played * 10**(-time / (difficulty*1e3))
+        score = nb_played * 10 ** (-time / (difficulty * 1e3))
         return score
 
     def get_best_scores(self, nb_best_scores=5, player_name=None, difficulty=None):
@@ -96,5 +99,5 @@ class Scoreboard:
         if difficulty is not None:
             filtered_scores = [v for v in filtered_scores if v[3] == difficulty]
 
-        best_scores = sorted(filtered_scores, key=lambda x: x[4], reverse=True)[:nb_best_scores]
+        best_scores = sorted(filtered_scores, key=lambda x: x[5], reverse=True)[:nb_best_scores]
         return best_scores

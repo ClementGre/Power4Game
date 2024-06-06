@@ -32,11 +32,12 @@ class App(tk.Tk):
 
     def end_game(self):
         # Logique de récupération du score et de sauvegarde
-        score = calculate_score(self.game_frame.game.nb_played, self.game_frame.time, self.game_frame.difficulty)
-        self.scoreboard.add_score(self.game_frame.game.player_name, self.game_frame.game.nb_played,
-                                  self.game_frame.time,
-                                  self.game_frame.difficulty, self.game_frame.game.is_player_red, score,
-                                  time.strftime("%d/%m/%Y %H:%M:%S"))
+        if self.game_frame.game.is_player_winner():
+            score = calculate_score(self.game_frame.game.nb_played, self.game_frame.time, self.game_frame.difficulty)
+            self.scoreboard.add_score(self.game_frame.game.player_name, self.game_frame.game.nb_played,
+                                      self.game_frame.time,
+                                      self.game_frame.difficulty, self.game_frame.game.is_player_red, score,
+                                      time.strftime("%d/%m/%Y %H:%M:%S"))
 
         # Cleaning up the game frame
         self.home_frame = HomeFrame(self, self.game_frame.game.player_name)

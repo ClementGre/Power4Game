@@ -54,7 +54,7 @@ class GameFrame(tk.Frame):
         if not self.game.is_game_done():
             self.time = time() - self.start_time
             self.widgets[2].update_time(self.time)
-            self.after(100, self.update_time)
+            self.after(10, self.update_time)
 
     def create_widgets(self):
         """
