@@ -105,13 +105,13 @@ class Game:
         :return: True si la partie est finie, False sinon
         :rtype: bool
         """
-        res = False
-        if self.nb_played == 42:
-            res = True
-        return res
+        return self.nb_played == 42 or self.winner != 0
 
     def is_player_winner(self):
         return self.winner == 1 if self.is_player_red else self.winner == 2
 
     def is_computer_winner(self):
         return self.winner == 2 if self.is_player_red else self.winner == 1
+
+    def resign(self):
+        self.winner = 2 if self.is_player_red else 1

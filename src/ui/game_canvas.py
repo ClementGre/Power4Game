@@ -33,12 +33,15 @@ class GameCanvas(tk.Canvas):
     def __init__(self, master):
         self.game_frame = master
         self.game = master.game
+        self.canvas_mouse_x = None
         self.bg_image = Image.open("src/res/noise.png")
         self.bg_canvas = tk.Canvas(master, width=700, height=700, highlightthickness=0, bg="#7B4D62")
 
         self.canvas_window = None
         self.bg_canvas.pack(side=tk.BOTTOM, fill="both", expand=True)
         self.bg_canvas.bind("<Configure>", self.on_resize)
+
+        self.arrow_visible = True
 
         super().__init__(self.bg_canvas, width=7 * self.UNIT + 2 * self.PANEL_MARGIN + 3,
                          height=6 * self.UNIT + 2 * self.PANEL_MARGIN + 3, highlightthickness=0)
@@ -61,8 +64,28 @@ class GameCanvas(tk.Canvas):
         :param event: L'événement de mouvement de la souris.
         :type event: tk.Event
         """
+        self.update_arrow(event.x)
+
+    def on_mouse_leave(self, event):
+        """
+        Cache le cercle lorsque la souris quitte le canevas.
+
+        :param event: L'événement de départ de la souris.
+        :type event: tk.Event
+        """
+        self.update_arrow()
+
+    def update_arrow(self, x=None):
+        if x is not None:
+            self.canvas_mouse_x = x
+
+        if not self.arrow_visible or self.canvas_mouse_x is None:
+            # Mettre la flèche en arrière plan
+            self.tag_lower(self.circle)
+            return
+
         # Calculer la colonne sur laquelle la souris se trouve
-        col = event.x // self.UNIT
+        col = (self.canvas_mouse_x - self.PANEL_MARGIN) // self.UNIT
         if 0 <= col < 7:
             # Calculer les coordonnées du cercle
             x1 = col * self.UNIT + self.PANEL_MARGIN + self.UNIT // 2 - 15
@@ -72,15 +95,8 @@ class GameCanvas(tk.Canvas):
 
             # Mettre à jour la position du cercle
             self.coords(self.circle, x1, y1, x2, y2)
-
-    def on_mouse_leave(self, event):
-        """
-        Cache le cercle lorsque la souris quitte le canevas.
-
-        :param event: L'événement de départ de la souris.
-        :type event: tk.Event
-        """
-        self.coords(self.circle, 0, 0, 0, 0)
+            # Mettre la flèche en avant plan
+            self.tag_raise(self.circle)
 
     def on_mouse_click(self, event):
         """
@@ -93,7 +109,13 @@ class GameCanvas(tk.Canvas):
         played = self.game_frame.player_play(x)
         if played is not None:
             self.add_token_animated(played[1], played[0], 1 if self.game.is_player_red else 2)
+            self.arrow_visible = False
+            self.update_arrow()
             self.after(500, self.computer_play)
+
+        elif self.game.is_game_done() or not self.game.is_player_turn():
+            self.arrow_visible = False
+            self.update_arrow()
 
     def computer_play(self):
         """
@@ -102,6 +124,12 @@ class GameCanvas(tk.Canvas):
         played = self.game_frame.computer_play()
         if played is not None:
             self.add_token_animated(played[1], played[0], 2 if self.game.is_player_red else 1)
+            self.arrow_visible = True
+            self.update_arrow()
+
+        elif self.game.is_game_done() or not self.game.is_player_turn():
+            self.arrow_visible = False
+            self.update_arrow()
 
     def add_token_animated(self, x, y, player, visible_y=0):
         """
@@ -168,6 +196,13 @@ class GameCanvas(tk.Canvas):
                          self.PANEL_MARGIN + (visible_y + 1) * self.UNIT + self.HOLE_MARGIN,
                          fill=color, outline="#506CE3", width=3,
                          tags="token_background" if player == 0 else f"token_{x}_{y}")
+
+    def resign(self):
+        """
+        Gère la démission du joueur.
+        """
+        self.arrow_visible = False
+        self.update_arrow()
 
     def on_resize(self, event):
         """

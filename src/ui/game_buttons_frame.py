@@ -14,13 +14,13 @@ class GameButtonsFrame(tk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
-        self.buttons.append(tk.Button(self, text="Resign", bg=bg, command=self.quit))
+        self.buttons.append(tk.Button(self, text="Resign", bg=bg, command=self.master.resign))
         self.buttons[-1].pack(side=tk.RIGHT, padx=10, pady=5)
         self.buttons.append(tk.Label(self, text="Time: 0.00", bg=bg, fg="#303030", font=("Courier", 16)))
         self.buttons[-1].pack(side=tk.RIGHT, padx=10, pady=5)
 
-    def quit(self):
-        self.master.end_game()
+    def game_ended(self):
+        self.buttons[0].config(text="Quit", command=self.master.master.end_game)
 
     def update_time(self, time):
         minutes = int(time / 60)
