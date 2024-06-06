@@ -33,8 +33,10 @@ class Game:
         :type column: int
         :param is_player: True si c'est le joueur qui joue, False si c'est l'ordinateur
         :type is_player: bool
-        :return: True si l'entité qui a joué a gagné, False sinon
-        :rtype: bool
+        :return: Si un jeton peut être insérer dans la colonne indiqué : (True, coordonnees) si l'entité qui a joué a gagné a, (False, coodonnees) sinon
+                 Sinon : (None, coordonnees)
+                 Avec coordonnees = (row,column), row étant la ligne de la première cellule vide dans la colonne choisie
+        :rtype: (bool, tuple)
         """
         # Insertion du jeton dans la colonne column
         if self.grid[0, column] != 0:
@@ -77,7 +79,7 @@ class Game:
         j = 0
         while (row + j) <= 5 and (column + j) <= 6 and (n == self.grid[row + j, column + j] == self.grid[row, column]):
             j += 1
-        if (i + j) >= 4:
+        if (i + j) >= 5 :
             return (True, (row, column))
 
         # Diagonale Nord-Est/Sud-Ouest
@@ -87,7 +89,7 @@ class Game:
         j = 0
         while (row + j) <= 5 and (column - j) >= 0 and (n == self.grid[row + j, column - j] == self.grid[row, column]):
             j += 1
-        if (i + j) >= 4:
+        if (i + j) >= 5 :
             return (True, (row, column))
 
         return (False, (row, column))

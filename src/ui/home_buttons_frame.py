@@ -1,11 +1,17 @@
 import tkinter as tk
-from PIL import Image, ImageTk
-from tkinter import PhotoImage
-import os
 
 class HomeButtonsFrame(tk.Frame):
+    """
+    Cadre des boutons spécifiques à l'accueil de l'application.
+
+    Gère l'affichage et les actions des boutons de l'accueil.
+    """
+
     def __init__(self, master):
         """
+        Initialise le cadre des boutons d'accueil.
+
+        :param master: L'instance parent qui est un GameFrame.
         :type master: GameFrame
         """
         super().__init__(master, bg="#81ADC8")
@@ -14,19 +20,10 @@ class HomeButtonsFrame(tk.Frame):
         self.create_widgets()
         
     def create_widgets(self):
-        self.buttons.append(tk.Button(self, text="❌", command=self.master.quit, font = ('Arial',8)))
+        """
+        Crée et ajoute les widgets de l'interface de boutons d'accueil.
+
+        Ajoute un bouton pour quitter l'application.
+        """
+        self.buttons.append(tk.Button(self, text="❌", command=self.master.quit, font=('Arial', 8)))
         self.buttons[-1].pack(side=tk.RIGHT, padx=10, pady=5)
-        # current_directory = os.path.dirname(os.path.abspath(__file__))
-        # image_path = os.path.join(current_directory, "Power4Game", "src", "ui", "Quitter.png")
-        
-        # if not os.path.exists(image_path):
-        #     print(f"Image file not found: {image_path}")
-        #     return
-        
-        # img_quit = Image.open(image_path)
-        # img_quit = ImageTk.PhotoImage(img_quit)
-        
-        # quit_button = tk.Button(self, command=self.master.quit, image=img_quit, compound=tk.CENTER)
-        # quit_button.image = img_quit
-        # quit_button.pack(side=tk.RIGHT, padx=10, pady=5)
-        # self.buttons.append(quit_button)

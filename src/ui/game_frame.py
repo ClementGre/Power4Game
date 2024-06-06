@@ -7,12 +7,24 @@ from src.ui.app_buttons_frame import AppButtonsFrame
 from src.ui.game_buttons_frame import GameButtonsFrame
 from src.ui.game_canvas import GameCanvas
 
-
 class GameFrame(tk.Frame):
+    """
+    Cadre principal du jeu Power4Game.
+
+    Gère l'affichage du jeu, la gestion des tours de jeu, le suivi du temps et les interactions joueur/ordinateur.
+    """
     def __init__(self, master, difficulty, player_name, is_player_red):
         """
+        Initialise le cadre de jeu.
+
+        :param master: L'instance parent qui est une App.
         :type master: App
-        :param master:
+        :param difficulty: Le niveau de difficulté du jeu.
+        :type difficulty: int
+        :param player_name: Le nom du joueur.
+        :type player_name: str
+        :param is_player_red: Détermine si le joueur joue avec les jetons rouges.
+        :type is_player_red: bool
         """
         self.difficulty = difficulty
         super().__init__(master)
@@ -28,55 +40,98 @@ class GameFrame(tk.Frame):
         self.after(10, self.update_time)
 
         if not self.game.is_player_turn():
-            self.after(500, self.widgets[0].computer_play())
+            self.after(500, self.computer_play)
 
     def update_time(self):
+        """
+        Met à jour le temps écoulé depuis le début du jeu et met à jour le widget d'affichage du temps.
+
+        Cette méthode est appelée de manière répétée toutes les 100 millisecondes.
+        """
         self.time = time() - self.start_time
         self.widgets[2].update_time(self.time)
         self.after(100, self.update_time)
 
     def create_widgets(self):
+        """
+        Crée et ajoute les widgets nécessaires pour l'interface de jeu.
+
+        Les widgets incluent le canevas de jeu, les boutons de l'application et les boutons de jeu.
+        """
         self.widgets.append(GameCanvas(self))
         self.widgets.append(AppButtonsFrame(self))
         self.widgets.append(GameButtonsFrame(self))
 
     def end_game(self):
+        """
+        Termine le jeu en appelant la méthode end_game de l'objet maître.
+        """
         self.master.end_game()
 
+    def messageBox_won(self):
+        """
+        Affiche une boîte de dialogue de victoire et demande à l'utilisateur s'il souhaite quitter le jeu.
+
+        Si l'utilisateur clique sur "OK", la méthode end_game est appelée.
+        """
+        tk.messagebox.showinfo("Victory !!!", "Player won game")
+        response_won = tk.messagebox.askokcancel("Confirmation", "Do you want to quit?")
+        if response_won:
+            self.end_game()
+
+    def messageBox_lose(self):
+        """
+        Affiche une boîte de dialogue de défaite et demande à l'utilisateur s'il souhaite quitter le jeu.
+
+        Si l'utilisateur clique sur "OK", la méthode end_game est appelée.
+        """
+        tk.messagebox.showinfo("Loosing !!!", "Computer won game")
+        response_lose = tk.messagebox.askokcancel("Confirmation", "Do you want to quit?")
+        if response_lose:
+            self.end_game()
+
     def player_play(self, column):
-        if not (self.game).is_player_turn() or self.game.is_game_done():
+        """
+        Gère le tour de jeu du joueur.
+
+        :param column: La colonne dans laquelle le joueur souhaite jouer.
+        :type column: int
+        :return: Les coordonnées du jeton joué ou None si le coup est invalide.
+        :rtype: tuple or None
+        """
+        if not self.game.is_player_turn() or self.game.is_game_done():
             print("Player tried to play when it's not his turn or the game is done")
             return None
 
         (won, coordinates) = self.game.play(column, True)
-        if coordinates is None:
+        while coordinates is None:
             print("Player played in a full column")
-            return None
+            (won, coordinates) = self.game.play(column, True)
+            
         if won or self.game.is_game_done():
-            self.after(500, self.end_game)
             print("Player won game" if won else "Game is done")
-            self.messageBox_won("oui")
+            self.messageBox_won()
             return coordinates
         print("Player played in column", column, "token at coordinates", coordinates)
+        
         return coordinates
 
     def computer_play(self):
+        """
+        Gère le tour de jeu de l'ordinateur.
+
+        :return: Les coordonnées du jeton joué ou None si le coup est invalide.
+        :rtype: tuple or None
+        """
         (won, coordinates) = self.game.play(get_computer_play_column(self.difficulty, self.game.grid), False)
-        if coordinates is None:
+        while coordinates is None:
             print(f"Computer play returned an invalid column {coordinates}")
-            return None
+            (won, coordinates) = self.game.play(get_computer_play_column(self.difficulty, self.game.grid), False)
         if won or self.game.is_game_done():
             # Computer wins game
-            self.after(500, self.end_game)
             print("Computer won game" if won else "Game is done")
-            self.messageBox_lose("oui")
+            self.messageBox_lose()
             return coordinates
 
         print("Computer played in column", coordinates[1], "token at coordinates", coordinates)
         return coordinates
-
-    def messageBox_won(self, event):
-        tk.messagebox.showinfo("Victory !!!", "Player won game")
-
-    def messageBox_lose(self, event):
-        tk.messagebox.showinfo("Loosing !!!", "Computer won game")

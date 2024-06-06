@@ -39,7 +39,8 @@ class Scoreboard:
         }
 
     def load_scores(self):
-        """Charge les scores depuis le fichier power4game_scores.json
+        """
+        Charge les scores depuis le fichier power4game_scores.json
         """
         try:
             file = open('power4game_scores.json', 'r', encoding='utf-8')
@@ -50,7 +51,8 @@ class Scoreboard:
                 self.scores = json.load(file)
 
     def save_scores(self):
-        """Sauvegarde les scores dans le fichier power4game_scores.json
+        """
+        Sauvegarde les scores dans le fichier power4game_scores.json
         """
         with open('power4game_scores', 'w', encoding='utf-8') as mon_fichier:
             json.dump(self.scores, mon_fichier)
@@ -70,14 +72,16 @@ class Scoreboard:
             self.scores[player_name] = [score_now]
 
     def calculate_score(self, nb_played, time, difficulty):
-        """Calcule le score en fonction du nombre de coups joués et du temps
+        """
+        Calcule le score en fonction du nombre de coups joués et du temps
         :return: score calculé
         """
         score = nb_played * 10**(-time / (difficulty*1e3)) 
         return score
 
     def get_best_scores(self, nb_best_scores=5, player_name=None, difficulty=None):
-        """Renvoie les meilleurs scores
+        """
+        Renvoie les meilleurs scores
         :param nb_best_scores: Nombre de meilleurs scores à renvoyer
         :type nb_best_scores: int
         :param player_name: Nom du joueur pour lequel on veut récupérer les meilleurs scores,

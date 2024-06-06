@@ -4,8 +4,16 @@ import tkinter as tk
 bg = "#E2E2E2"
 
 class ScoreboardFrame(tk.Frame):
+    """
+    Cadre du tableau des scores pour l'application Power4Game.
+
+    Affiche les scores des joueurs dans une liste déroulante.
+    """
     def __init__(self, master):
         """
+        Initialiser le cadre du tableau de bord des scores.
+
+        :param master: L'instance parent qui est un GameFrame.
         :type master: GameFrame
         """
         super().__init__(master, bg=bg)
@@ -16,6 +24,11 @@ class ScoreboardFrame(tk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
+        """
+        Créer et afficher les widgets du tableau de bord des scores.
+
+        Dessine une liste déroulante contenant les informations sur les parties enregistrées
+        """
         # for each score in self.master.master.scoreboard.scores:
         # draw a line of the table with the score : Player name, nb_played, time, difficulty, score, date
 
