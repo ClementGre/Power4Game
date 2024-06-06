@@ -28,7 +28,7 @@ class GameFrame(tk.Frame):
         self.after(10, self.update_time)
 
         if not self.game.is_player_turn():
-            self.after(500, self.computer_play)
+            self.after(500, self.widgets[0].computer_play())
 
     def update_time(self):
         self.time = time() - self.start_time
@@ -54,8 +54,9 @@ class GameFrame(tk.Frame):
             return None
         if won or self.game.is_game_done():
             self.after(500, self.end_game)
+            print("Player won game" if won else "Game is done")
             return coordinates
-
+        print("Player played in column", column, "token at coordinates", coordinates)
         return coordinates
 
     def computer_play(self):
@@ -66,5 +67,9 @@ class GameFrame(tk.Frame):
         if won or self.game.is_game_done():
             # Computer wins game
             self.after(500, self.end_game)
+            print("Computer won game" if won else "Game is done")
             return coordinates
+
+        print("Computer played in column", coordinates[1], "token at coordinates", coordinates)
+        return coordinates
 
