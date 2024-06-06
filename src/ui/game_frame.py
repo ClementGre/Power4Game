@@ -67,17 +67,23 @@ class GameFrame(tk.Frame):
         self.widgets.append(GameButtonsFrame(self))
 
     def resign(self):
+        """
+        Permet d'abandonner la partie en cours.
+        """
         self.game.resign()
         self.widgets[0].resign()
         self.end_game()
 
     def end_game(self):
+        """
+        Gère la fin de la paritie
+        """
         if self.game.is_player_winner():
-            do_quit = tk.messagebox.showinfo("Victory!", "Player won game\nDo you want to quit?")
+            do_quit = tk.messagebox.askokcancel("Victory!", "Player won game\Do you want to quit?")
         elif self.game.is_computer_winner():
-            do_quit = tk.messagebox.showinfo("Defeat!", "Computer won game\nDo you want to quit?")
+            do_quit = tk.messagebox.askokcancel("Defeat!", "Computer won game\Do you want to quit?")
         else:
-            do_quit = tk.messagebox.showinfo("Draw!", "Game is a draw\nDo you want to quit?")
+            do_quit = tk.messagebox.askokcancel("Draw!", "Game is a draw\Do you want to quit?")
 
         self.widgets[2].game_ended()
 
