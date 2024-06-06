@@ -39,8 +39,7 @@ class Scoreboard:
         }
 
     def load_scores(self):
-        """
-        Charge les scores depuis le fichier power4game_scores.json
+        """Charge les scores depuis le fichier power4game_scores.json
         """
         try:
             file = open('power4game_scores.json', 'r', encoding='utf-8')
@@ -51,8 +50,7 @@ class Scoreboard:
                 self.scores = json.load(file)
 
     def save_scores(self):
-        """
-        Sauvegarde les scores dans le fichier power4game_scores.json
+        """Sauvegarde les scores dans le fichier power4game_scores.json
         """
         with open('power4game_scores', 'w', encoding='utf-8') as mon_fichier:
             json.dump(self.scores, mon_fichier)
@@ -61,27 +59,23 @@ class Scoreboard:
         """Ajoute un score pour un joueur
         :return: score calculé
         """
-        score_now = (nb_played, time, difficulty, is_red, score, date)
+        score = (nb_played, time, difficulty, is_red, score, date)
         if player_name in self.scores.keys():
-            list_scores = self.scores[player_name]
-            position = 0
-            while score_now[5] <= list_scores[position][5]:
-                position += 1
-            list_scores.insert(position + 1, score_now)
+            self.scores[player_name].append(score)
         else:
-            self.scores[player_name] = [score_now]
+            self.scores[player_name] = [score]
+
+        self.save_scores()
 
     def calculate_score(self, nb_played, time, difficulty):
-        """
-        Calcule le score en fonction du nombre de coups joués et du temps
+        """Calcule le score en fonction du nombre de coups joués et du temps
         :return: score calculé
         """
-        score = nb_played * 10**(-time / (difficulty*1e3)) 
+        score = nb_played * 10**(-time / (difficulty*1e3))
         return score
 
     def get_best_scores(self, nb_best_scores=5, player_name=None, difficulty=None):
-        """
-        Renvoie les meilleurs scores
+        """Renvoie les meilleurs scores
         :param nb_best_scores: Nombre de meilleurs scores à renvoyer
         :type nb_best_scores: int
         :param player_name: Nom du joueur pour lequel on veut récupérer les meilleurs scores,
@@ -90,7 +84,17 @@ class Scoreboard:
         :param difficulty: Difficulté pour laquelle on veut récupérer les meilleurs scores,
             si None, on récupère les meilleurs scores pour toutes les difficultés
         """
-        best_scores = []
-        for i in range(0, nb_best_scores):
-            best_scores.append(self.scores[player_name][i])
+
+        filtered_scores = []
+
+        for player, player_scores in self.scores.items():
+            for score in player_scores:
+                filtered_scores.append([player] + list(score))
+
+        if player_name is not None:
+            filtered_scores = [v for v in filtered_scores if player_name in v[0]]
+        if difficulty is not None:
+            filtered_scores = [v for v in filtered_scores if v[3] == difficulty]
+
+        best_scores = sorted(filtered_scores, key=lambda x: x[4], reverse=True)[:nb_best_scores]
         return best_scores
