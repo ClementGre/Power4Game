@@ -34,6 +34,6 @@ class GameButtonsFrame(tk.Frame):
         elif ms < 100:
             ms = "0" + str(ms)
 
-        self.buttons[1].config(text=f"{minutes}:{seconds}.{ms}")
+        self.buttons[1].config(text=f"{minutes}:{seconds}")
 
 

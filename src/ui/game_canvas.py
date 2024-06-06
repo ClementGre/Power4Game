@@ -29,16 +29,26 @@ class GameCanvas(tk.Canvas):
         self.bg_canvas.bind("<Configure>", self.on_resize)
 
         super().__init__(self.bg_canvas, width=7 * self.UNIT + 2 * self.PANEL_MARGIN + 3,
-                         height=6 * self.UNIT + 2 * self.PANEL_MARGIN + 3, highlightthickness=0)
+                         height=7 * self.UNIT + 2 * self.PANEL_MARGIN + 3, highlightthickness=0)
 
         self.bind("<Motion>", self.on_mouse_move)
         self.bind("<Leave>", self.on_mouse_leave)
         self.bind("<Button-1>", self.on_mouse_click)
+        
+        self.arrow = tk.Canvas.create_line(0, 0, 0, 6 * self.UNIT, arrow=tk.LAST, fill='red')
+        self.label = tk.Canvas.create_text(0, -20, text='', fill='red')
 
         self.create_widgets()
 
     def on_mouse_move(self, event):
-        pass
+        cell_size = self.UNIT
+        column = event.x // cell_size
+        cols = 7 ; rows = 6
+        if 0 <= column < cols:
+            self.bg_canvas.coords(self.arrow, column * cell_size + cell_size // 2, 0, 
+                          column * cell_size + cell_size // 2, rows * cell_size)
+            self.bg_canvas.coords(self.label, column * cell_size + cell_size // 2, -20)
+            self.bg_canvas.itemconfig(self.label, text=f'Colonne {column + 1}')
 
     def on_mouse_leave(self, event):
         pass
@@ -66,7 +76,7 @@ class GameCanvas(tk.Canvas):
 
     def create_widgets(self):
         # Draw the board: 8ux7u blue rectangle, and 8ux7u white ovals to make holes in the board
-        self.create_rectangle(1.5, 1.5, 7 * self.UNIT + 2 * self.PANEL_MARGIN, 6 * self.UNIT + 2 * self.PANEL_MARGIN,
+        self.create_rectangle(1.5, 1.5+self.UNIT, 7 * self.UNIT + 2 * self.PANEL_MARGIN, 6 * self.UNIT + 2 * self.PANEL_MARGIN,
                               fill="#0029D9", outline="#506CE3", width=3)
         for x in range(7):
             for y in range(6):
@@ -88,7 +98,7 @@ class GameCanvas(tk.Canvas):
         self.create_oval(self.PANEL_MARGIN + x * self.UNIT - self.HOLE_MARGIN,
                          self.PANEL_MARGIN + visible_y * self.UNIT - self.HOLE_MARGIN,
                          self.PANEL_MARGIN + (x + 1) * self.UNIT + self.HOLE_MARGIN,
-                         self.PANEL_MARGIN + (visible_y + 1) * self.UNIT + self.HOLE_MARGIN,
+                         self.PANEL_MARGIN + (visible_y + 2) * self.UNIT + self.HOLE_MARGIN,
                          fill=color, outline="#506CE3", width=3,
                          tags="token_background" if player == 0 else f"token_{x}_{y}")
 
