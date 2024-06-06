@@ -1,5 +1,7 @@
 import tkinter as tk
+
 from PIL import Image, ImageTk, ImageFilter
+
 
 def create_repeated_image(image, width, height):
     """
@@ -21,6 +23,7 @@ def create_repeated_image(image, width, height):
             repeated_image.paste(image, (x, y))
     return repeated_image
 
+
 class GameCanvas(tk.Canvas):
     UNIT = 70
     HOLE_SIZE = UNIT * 0.8
@@ -28,20 +31,17 @@ class GameCanvas(tk.Canvas):
     PANEL_MARGIN = 10
 
     def __init__(self, master):
-        """
-        Initialise le canevas du jeu.
-
-        :param master: L'instance parent qui est un GameFrame.
-        :type master: GameFrame
-        """
         self.game_frame = master
         self.game = master.game
+        self.canvas_mouse_x = None
         self.bg_image = Image.open("src/res/noise.png")
         self.bg_canvas = tk.Canvas(master, width=700, height=700, highlightthickness=0, bg="#7B4D62")
 
         self.canvas_window = None
         self.bg_canvas.pack(side=tk.BOTTOM, fill="both", expand=True)
         self.bg_canvas.bind("<Configure>", self.on_resize)
+
+        self.arrow_visible = True
 
         super().__init__(self.bg_canvas, width=7 * self.UNIT + 2 * self.PANEL_MARGIN + 3,
                          height=6 * self.UNIT + 2 * self.PANEL_MARGIN + 3, highlightthickness=0)
@@ -51,7 +51,10 @@ class GameCanvas(tk.Canvas):
         self.bind("<Motion>", self.on_mouse_move)
         self.bind("<Leave>", self.on_mouse_leave)
         self.bind("<Button-1>", self.on_mouse_click)
-        
+
+        # self.arrow = tk.Canvas.create_line(0, 0, 0, 6 * self.UNIT, arrow=tk.LAST, fill='red')
+        # self.label = tk.Canvas.create_text(0, -20, text='', fill='red')
+
         self.create_widgets()
 
     def on_mouse_move(self, event):
@@ -61,8 +64,28 @@ class GameCanvas(tk.Canvas):
         :param event: L'événement de mouvement de la souris.
         :type event: tk.Event
         """
+        self.update_arrow(event.x)
+
+    def on_mouse_leave(self, event):
+        """
+        Cache le cercle lorsque la souris quitte le canevas.
+
+        :param event: L'événement de départ de la souris.
+        :type event: tk.Event
+        """
+        self.update_arrow()
+
+    def update_arrow(self, x=None):
+        if x is not None:
+            self.canvas_mouse_x = x
+
+        if not self.arrow_visible or self.canvas_mouse_x is None:
+            # Mettre la flèche en arrière plan
+            self.tag_lower(self.circle)
+            return
+
         # Calculer la colonne sur laquelle la souris se trouve
-        col = event.x // self.UNIT
+        col = (self.canvas_mouse_x - self.PANEL_MARGIN) // self.UNIT
         if 0 <= col < 7:
             # Calculer les coordonnées du cercle
             x1 = col * self.UNIT + self.PANEL_MARGIN + self.UNIT // 2 - 15
@@ -72,15 +95,8 @@ class GameCanvas(tk.Canvas):
 
             # Mettre à jour la position du cercle
             self.coords(self.circle, x1, y1, x2, y2)
-
-    def on_mouse_leave(self, event):
-        """
-        Cache le cercle lorsque la souris quitte le canevas.
-
-        :param event: L'événement de départ de la souris.
-        :type event: tk.Event
-        """
-        self.coords(self.circle, 0, 0, 0, 0)
+            # Mettre la flèche en avant plan
+            self.tag_raise(self.circle)
 
     def on_mouse_click(self, event):
         """
@@ -93,7 +109,13 @@ class GameCanvas(tk.Canvas):
         played = self.game_frame.player_play(x)
         if played is not None:
             self.add_token_animated(played[1], played[0], 1 if self.game.is_player_red else 2)
+            self.arrow_visible = False
+            self.update_arrow()
             self.after(500, self.computer_play)
+
+        elif self.game.is_game_done() or not self.game.is_player_turn():
+            self.arrow_visible = False
+            self.update_arrow()
 
     def computer_play(self):
         """
@@ -102,6 +124,12 @@ class GameCanvas(tk.Canvas):
         played = self.game_frame.computer_play()
         if played is not None:
             self.add_token_animated(played[1], played[0], 2 if self.game.is_player_red else 1)
+            self.arrow_visible = True
+            self.update_arrow()
+
+        elif self.game.is_game_done() or not self.game.is_player_turn():
+            self.arrow_visible = False
+            self.update_arrow()
 
     def add_token_animated(self, x, y, player, visible_y=0):
         """
@@ -168,6 +196,13 @@ class GameCanvas(tk.Canvas):
                          self.PANEL_MARGIN + (visible_y + 1) * self.UNIT + self.HOLE_MARGIN,
                          fill=color, outline="#506CE3", width=3,
                          tags="token_background" if player == 0 else f"token_{x}_{y}")
+
+    def resign(self):
+        """
+        Gère la démission du joueur.
+        """
+        self.arrow_visible = False
+        self.update_arrow()
 
     def on_resize(self, event):
         """
