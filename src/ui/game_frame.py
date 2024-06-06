@@ -75,9 +75,7 @@ class GameFrame(tk.Frame):
         Si l'utilisateur clique sur "OK", la méthode end_game est appelée.
         """
         tk.messagebox.showinfo("Victory !!!", "Player won game")
-        response_won = tk.messagebox.askokcancel("Confirmation", "Do you want to quit?")
-        if response_won:
-            self.end_game()
+        self.end_game()
 
     def messageBox_lose(self):
         """
@@ -86,20 +84,16 @@ class GameFrame(tk.Frame):
         Si l'utilisateur clique sur "OK", la méthode end_game est appelée.
         """
         tk.messagebox.showinfo("Loosing !!!", "Computer won game")
-        response_lose = tk.messagebox.askokcancel("Confirmation", "Do you want to quit?")
-        if response_lose:
-            self.end_game()
+        self.end_game()
             
     def messageBox_draw(self):
         """
-        Affiche une boîte de dialogue de défaite et demande à l'utilisateur s'il souhaite quitter le jeu.
+        Affiche une boîte de dialogue de nul et demande à l'utilisateur s'il souhaite quitter le jeu.
 
         Si l'utilisateur clique sur "OK", la méthode end_game est appelée.
         """
         tk.messagebox.showinfo("Draw !!!", "Nice try")
-        response_lose = tk.messagebox.askokcancel("Confirmation", "Do you want to quit?")
-        if response_lose:
-            self.end_game()
+        self.end_game()
 
     def player_play(self, column):
         """
