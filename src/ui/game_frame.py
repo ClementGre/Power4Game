@@ -44,7 +44,7 @@ class GameFrame(tk.Frame):
         self.master.end_game()
 
     def player_play(self, column):
-        if not self.game.is_player_turn() or self.game.is_game_done():
+        if not (self.game).is_player_turn() or self.game.is_game_done():
             print("Player tried to play when it's not his turn or the game is done")
             return None
 
@@ -55,6 +55,7 @@ class GameFrame(tk.Frame):
         if won or self.game.is_game_done():
             self.after(500, self.end_game)
             print("Player won game" if won else "Game is done")
+            self.messageBox_won("oui")
             return coordinates
         print("Player played in column", column, "token at coordinates", coordinates)
         return coordinates
@@ -68,8 +69,14 @@ class GameFrame(tk.Frame):
             # Computer wins game
             self.after(500, self.end_game)
             print("Computer won game" if won else "Game is done")
+            self.messageBox_lose("oui")
             return coordinates
 
         print("Computer played in column", coordinates[1], "token at coordinates", coordinates)
         return coordinates
 
+    def messageBox_won(self, event):
+        tk.messagebox.showinfo("Victory !!!", "Player won game")
+
+    def messageBox_lose(self, event):
+        tk.messagebox.showinfo("Loosing !!!", "Computer won game")

@@ -61,13 +61,12 @@ class Game:
         self.nb_played += 1
 
         # Colonne
-        for i in range(2):
-            if n == self.grid[i, column] == self.grid[i + 1, column] == self.grid[i + 2, column] == self.grid[
-                i + 3, column]:
+        for i in range(3):
+            if n == self.grid[i, column] == self.grid[i + 1, column] == self.grid[i + 2, column] == self.grid[i + 3, column]:
                 return (True, (row, column))
 
         # Ligne
-        for i in range(3):
+        for i in range(4):
             if n == self.grid[row, i] == self.grid[row, i + 1] == self.grid[row, i + 2] == self.grid[row, i + 3]:
                 return (True, (row, column))
 
@@ -78,7 +77,7 @@ class Game:
         j = 0
         while (row + j) <= 5 and (column + j) <= 6 and (n == self.grid[row + j, column + j] == self.grid[row, column]):
             j += 1
-        if (i + j) >= 3:
+        if (i + j) >= 4:
             return (True, (row, column))
 
         # Diagonale Nord-Est/Sud-Ouest
@@ -88,7 +87,7 @@ class Game:
         j = 0
         while (row + j) <= 5 and (column - j) >= 0 and (n == self.grid[row + j, column - j] == self.grid[row, column]):
             j += 1
-        if (i + j) >= 3:
+        if (i + j) >= 4:
             return (True, (row, column))
 
         return (False, (row, column))
