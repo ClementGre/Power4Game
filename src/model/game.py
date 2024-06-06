@@ -34,8 +34,10 @@ class Game:
         :type column: int
         :param is_player: True si c'est le joueur qui joue, False si c'est l'ordinateur
         :type is_player: bool
-        :return: True si l'entité qui a joué a gagné, False sinon
-        :rtype: bool
+        :return: Si un jeton peut être insérer dans la colonne indiqué : (True, coordinates) si l'entité qui a joué a gagné a, (False, coordinates) sinon
+                 Sinon : (None, coordinates)
+                 Avec coordinates = (row,column), row étant la ligne de la première cellule vide dans la colonne choisie
+        :rtype: (bool, tuple)
         """
         # Insertion du jeton dans la colonne column
         if self.grid[0, column] != 0:
