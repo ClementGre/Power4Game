@@ -1,7 +1,7 @@
-import tkinter as tk
-from PIL import Image, ImageTk
-from tkinter import PhotoImage
 import os
+import tkinter as tk
+from tkinter import PhotoImage
+
 
 class StartFrame(tk.Frame):
 
@@ -36,23 +36,14 @@ class StartFrame(tk.Frame):
         frame = tk.Frame(self)
         frame.pack(pady=20)
 
-        #Red button
-        # current_directory = os.getcwd()
-        # image_path = os.path.join(current_directory, "Power4Game", "src", "ui", "Quitter.png")
-        # if not os.path.exists(image_path):
-        #     print(f"Image file not found: {image_path}")
-        #     return
-        
-        # red = Image.open(image_path)
-        # red = ImageTk.PhotoImage(red)
-        
-        # red_button = tk.Button(self, command=self.master.quit, image=red, compound=tk.CENTER)
-        # red_button.image = red
-        # red_button.pack(side=tk.LEFT, padx=10)
-        self.widgets.append(tk.Button(frame, text="   ", command=self.play_as_red, bg = 'red'))
+        self.red = PhotoImage(file=os.path.join("src", "res", "rouge.png"))
+        self.widgets.append(
+            tk.Button(frame, text='Jouer', command=self.play_as_red, image=self.red, compound=tk.BOTTOM, width=70,
+                      height=70))
         self.widgets[-1].pack(side=tk.LEFT, padx=10)
 
-        self.widgets.append(tk.Button(frame, text="   ", command=self.play_as_yellow, bg = 'yellow'))
+        self.yellow = PhotoImage(file=os.path.join("src", "res", "jaune.png"))
+        self.widgets.append(tk.Button(frame, text='Jouer', command=self.play_as_yellow, image=self.yellow, compound=tk.BOTTOM, width=70, height=70))
         self.widgets[-1].pack(side=tk.RIGHT, padx=10)
 
     def get_player_name(self):
