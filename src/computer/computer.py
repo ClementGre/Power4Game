@@ -217,7 +217,7 @@ def get_computer_play_column(difficulty, grid, is_player_red):
     :return: La colonne jouée par l'ordinateur
     """
 
-    if not is_player_red:
+    if is_player_red:
         new_grid = numpy.zeros((6, 7))
         for i in range(6):
             for j in range(7):
@@ -232,5 +232,3 @@ def get_computer_play_column(difficulty, grid, is_player_red):
     print("Grid:", grid)
     print("Computer playing in:", x)
     return x
-
-    # return random.randint(0, 6)
