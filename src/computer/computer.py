@@ -217,6 +217,7 @@ def get_computer_play_column(difficulty, grid):
 
     l = alphabeta(grid, difficulty, -inf, inf, True, difficulty)
     x = coup_a_jouer(l)
+    print("Grid:", grid)
     print("Computer playing in:", x)
     return x
 

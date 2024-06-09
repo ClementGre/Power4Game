@@ -24,7 +24,7 @@ class StartFrame(tk.Frame):
         self.widgets.append(tk.Label(self, text="Please select the difficulty level"))
         self.widgets[-1].pack()
 
-        self.widgets.append(tk.Scale(self, from_=1, to=8, orient=tk.HORIZONTAL, variable=self.difficulty))
+        self.widgets.append(tk.Scale(self, from_=1, to=6, orient=tk.HORIZONTAL, variable=self.difficulty))
         self.widgets[-1].pack(pady=(0, 20))
 
         # name entry
