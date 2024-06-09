@@ -2,3 +2,4 @@
 /**/__pycache__/*
 # Exclude all .DS_Store files
 .DS_Store
+/power4game_scores.json
