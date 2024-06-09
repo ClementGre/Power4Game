@@ -43,7 +43,7 @@ class GameFrame(tk.Frame):
         self.after(10, self.update_time)
 
         if not self.game.is_player_turn():
-            self.after(500, self.computer_play)
+            self.after(500, self.widgets[0].computer_play)
 
     def update_time(self):
         """
@@ -89,7 +89,7 @@ class GameFrame(tk.Frame):
 
         if do_quit:
             self.master.end_game()
-        
+
 
     def player_play(self, column):
         """
@@ -126,7 +126,7 @@ class GameFrame(tk.Frame):
             print("Computer tried to play when it's not his turn or the game is done")
             return None
 
-        (won, coordinates) = self.game.play(get_computer_play_column(self.difficulty, self.game.grid), False)
+        (won, coordinates) = self.game.play(get_computer_play_column(self.difficulty, self.game.grid, self.game.is_player_red), False)
 
         if coordinates is None:
             print(f"Computer play returned an invalid column {coordinates}")

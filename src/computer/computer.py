@@ -1,6 +1,8 @@
 import copy
 from math import inf
 
+import numpy
+
 
 def trouve_consecutifs(i, j, joueur, grid):
     """
@@ -202,7 +204,7 @@ def coup_a_jouer(l):
     return colone_a_jouer
 
 
-def get_computer_play_column(difficulty, grid):
+def get_computer_play_column(difficulty, grid, is_player_red):
     """Renvoie la colonne jouée par l'ordinateur en fonction de la difficulté et de la grille actuelle.
     Développé par : Elie et Maxence
     :param difficulty: La difficulté de l'ordinateur, de 1 à 4
@@ -214,6 +216,16 @@ def get_computer_play_column(difficulty, grid):
         2: joueur jaune
     :return: La colonne jouée par l'ordinateur
     """
+
+    if not is_player_red:
+        new_grid = numpy.zeros((6, 7))
+        for i in range(6):
+            for j in range(7):
+                if grid[i][j] == 1:
+                    new_grid[i][j] = 2
+                elif grid[i][j] == 2:
+                    new_grid[i][j] = 1
+        grid = new_grid
 
     l = alphabeta(grid, difficulty, -inf, inf, True, difficulty)
     x = coup_a_jouer(l)
