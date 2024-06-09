@@ -39,13 +39,13 @@ class StartFrame(tk.Frame):
         self.red = PhotoImage(file=os.path.join("src", "res", "rouge.png"))
         self.widgets.append(
             tk.Button(frame, text='Play as', command=self.play_as_red, image=self.red, compound=tk.BOTTOM,
-                      width=70, height=70, border='0', bg='blue'))
+                      width=70, height=70, border='0', bg='cyan'))
         self.widgets[-1].pack(side=tk.LEFT, padx=10)
 
         self.yellow = PhotoImage(file=os.path.join("src", "res", "jaune.png"))
         self.widgets.append(
             tk.Button(frame, text='Play as', command=self.play_as_yellow, image=self.yellow, compound=tk.BOTTOM,
-                      width=70, height=70, border='0', bg='blue'))
+                      width=70, height=70, border='0', bg='cyan'))
         self.widgets[-1].pack(side=tk.RIGHT, padx=10)
 
     def get_player_name(self):

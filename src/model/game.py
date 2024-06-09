@@ -82,7 +82,7 @@ class Game:
         j = 0
         while (row + j) <= 5 and (column + j) <= 6 and (n == self.grid[row + j, column + j] == self.grid[row, column]):
             j += 1
-        if (i + j) >= 4:
+        if (i + j) >= 5 :
             self.winner = n
             return True, (row, column)
 
@@ -93,7 +93,7 @@ class Game:
         j = 0
         while (row + j) <= 5 and (column - j) >= 0 and (n == self.grid[row + j, column - j] == self.grid[row, column]):
             j += 1
-        if (i + j) >= 4:
+        if (i + j) >= 5 :
             self.winner = n
             return True, (row, column)
 

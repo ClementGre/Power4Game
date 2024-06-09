@@ -1,4 +1,3 @@
-import random
 import numpy as np
 from math import inf
 import copy
@@ -36,6 +35,8 @@ def trouve_consecutifs(i, j, joueur, grid):
                         l2.append([(nb, nb2), grid[i + nb][j + nb2]])
                         
     
+          
+    
     for val in l2:
         nb, nb2 = val[0]
         if val[1] == joueur: 
@@ -61,6 +62,9 @@ def trouve_consecutifs(i, j, joueur, grid):
                                 
                                 
     return l         
+
+#print(trouve_consecutifs(5, 0, 1, grid))
+
 
 def trouve_tout_les_consectifs2(grid, joueur):
     l = []
@@ -96,6 +100,26 @@ def trouve_tout_les_consectifs2(grid, joueur):
 
                 else:
                     return l_consectifs_i_j
+    
+
+
+
+    # if len(l) > 0:
+    #     l_to_remove = []
+    #     for se in l:
+    #         h = 0
+    #         found = False
+    #         while h < len(l) and found == False:
+    #             se2 = l[h]
+    #             if se2.issubset(se) and se2 != se:
+    #                 trouve = True
+    #                 l_to_remove.append(se2)
+
+                
+    #         h = h + 1   
+                
+    #     for se3 in l_to_remove:
+    #         l.remove(se3)
 
 
     return l
@@ -133,6 +157,12 @@ def score(grid):
     return score
 
 
+
+#print(score(grid))
+print("####################")
+
+
+
 def drop_piece(grid, colonne, piece):
   
   #Cas dernière ligne
@@ -163,6 +193,9 @@ def create_all_childs(grid, piece):
         l.append(child)
      
     return l
+
+
+
 
     
 def alphabeta(node, depth, a, b, maximizingPlayer, n):
@@ -225,23 +258,73 @@ def coup_a_jouer(l):
         l2.append(k)
         
     return colone_a_jouer
+
+
+
+
     
-def get_computer_play_column(difficulty, grid):
-    """Renvoie la colonne jouée par l'ordinateur en fonction de la difficulté et de la grille actuelle.
-    Développé par : Elie et Maxence
-    :param difficulty: La difficulté de l'ordinateur, de 1 à 4
-    :type difficulty: int
-    :param grid: La grille actuelle contenant
-    :type grid: numpy array grid: numpy array de taille 6x7 contenant des entiers :
-        0: case vide
-        1: joueur rouge
-        2: joueur jaune
-    :return: La colonne jouée par l'ordinateur
-    """
+grid = np.zeros((6, 7))
+grid = [[0, 0, 0, 0, 0, 0, 0,],
+        [0, 0, 0, 0, 0, 0, 0,],
+        [0, 0, 0, 0, 0, 0, 0,],
+        [0, 0, 1, 2, 1, 0, 0,],
+        [2, 2, 1, 1, 1, 2, 1,],
+        [2, 2, 2, 1, 1, 1, 2,]]
+grid = np.array(grid)
+i = 0
 
-    l = alphabeta(grid, difficulty, -inf, inf, True, difficulty)
-    return coup_a_jouer(l)
 
-    # return random.randint(0, 6)    
+###########################               UTILISATION DU CODE                 ###########################"
 
+difficulte = 4    # de 2 a 6
+l = alphabeta(grid, difficulte, -inf, inf, True, difficulte)
+coup_a_jouer = coup_a_jouer(l)
+
+
+
+
+
+
+
+
+
+
+
+
+
+# for tup in l:
+#      print(tup[0], tup[1])
+
+# print(coup_a_jouer(l))
+
+
+# while i < 100:
+
+#     joueur = int(input("quel joueur: "))
+#     if joueur == 2:
+#         alphabeta(grid, 6, -inf, inf, True, 6)
+    
+#     colonne = int(input("quelle colone: "))
+#     grid = drop_piece(grid, colonne, joueur)
+    
+#     print("#################               grille actuelle             ###################")
+#     print(grid)
+    
+    
+    
+   
+    
+start= time.time()  
+    
+#g = alphabeta(grid, 6, -inf, +inf, True, 6)
+#print(g)     
+    
+    
+end= time.time()   
+elapsed = end - start
+print(elapsed)
+        
+
+    
+    
     
