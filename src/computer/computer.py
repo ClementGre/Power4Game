@@ -259,19 +259,22 @@ def alphabeta(node, depth, a, b, maximizingPlayer, n):
     return value
     
 
-def coup_a_jouer(l):
+def coup_a_jouer(l, grid):
     l2 = [0]
     k = 0
     mini = -inf
     
     for tup in l:
+        if grid[0, k] != 0:
+            l2.append(k)
+            k = k + 1
         
-        score = tup[1]
-        
-        if score > mini:
-            if l2!= []:
-                colone_a_jouer = l2[-1]
-                mini = score
+        else:
+            score = tup[1]
+            if score > mini:
+                if l2!= []:
+                    colone_a_jouer = l2[-1]
+                    mini = score
  
     
  
@@ -332,14 +335,14 @@ def get_computer_play_column(difficulty, grid, is_player_red):
 
     
     l = alphabeta(grid, 1, -inf, inf, True, 1)
-    coup_premier, mini = coup_a_jouer(l)
+    coup_premier, mini = coup_a_jouer(l, grid)
     if mini == 10000:
         return coup_premier
 
 
     l = alphabeta(grid, difficulty, -inf, inf, True, difficulty)
     #x = coup_a_jouer(l)
-    x = check_coup_a_jouer(coup_a_jouer(l), difficulty, grid)
+    x = check_coup_a_jouer(coup_a_jouer(l, grid), difficulty, grid)
   
     
     print("Grid:", grid)
