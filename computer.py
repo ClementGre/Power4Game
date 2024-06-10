@@ -300,7 +300,7 @@ def check_coup_a_jouer(tup, depth, grid):
             l = alphabeta(grid, depth - i, -inf, inf, True, depth - i)
             
             #print(i, mini)
-            colone, mini = coup_a_jouer(l)
+            colone, mini = coup_a_jouer(l, grid)
             i = i + 1
     
     #print(mini)
