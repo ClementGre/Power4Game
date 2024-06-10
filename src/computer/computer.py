@@ -97,9 +97,9 @@ def score(grid):
         for se in l_joueur:
             nombre = len(se)
             if nombre == 3:
-                score = score - 15
+                score = score - 1000
             if nombre == 2:
-                score = score - 4
+                score = score - 100
 
     else:
         return l_joueur
@@ -120,31 +120,43 @@ def score(grid):
 
 
 def drop_piece(grid, colonne, piece):
-    # Cas dernière ligne
-    if grid[5, colonne] == 0:
-        grid[5, colonne] = piece
-    # Cas autres lignes
-    else:
-        for ligne in range(5):
-            if grid[ligne, colonne] == 0 and grid[ligne + 1, colonne] != 0:
-                grid[ligne, colonne] = piece
-
-                break
-
-    return grid
+  
+  if grid[0, colonne] != 0:
+      return numpy.zeros((2, 2))  
+  
+  #Cas dernière ligne
+  elif grid[5, colonne] == 0:
+      grid[5,colonne] = piece
+      
+  
+      
+  #Cas autres lignes
+  else: 
+       for ligne in range(5):
+              if grid[ligne, colonne] == 0 and grid[ligne + 1, colonne] != 0:
+               grid[ligne,colonne] = piece
+      
+               break
+       
+  
+  return grid
 
 
 def create_all_childs(grid, piece):
+
     l = []
     l_originals = []
 
     for j in range(7):
         l_originals.append(copy.deepcopy(grid))
-
+        
     for i in range(7):
         child = drop_piece(l_originals[i], i, piece)
-        l.append(child)
+        if child.any():
+            l.append(child)
 
+        
+     
     return l
 
 
@@ -155,7 +167,7 @@ def alphabeta(node, depth, a, b, maximizingPlayer, n):
 
     if maximizingPlayer:
         value = -inf
-        l_childs = create_all_childs(node, 2)
+        l_childs = create_all_childs(node, 1)
         for child in l_childs:
             value = max(value, alphabeta(child, depth - 1, a, b, False, n))
 
@@ -173,7 +185,7 @@ def alphabeta(node, depth, a, b, maximizingPlayer, n):
 
     else:
         value = inf
-        l_childs = create_all_childs(node, 1)
+        l_childs = create_all_childs(node, 2)
         for child in l_childs:
             value = min(value, alphabeta(child, depth - 1, a, b, True, n))
 
@@ -185,23 +197,50 @@ def alphabeta(node, depth, a, b, maximizingPlayer, n):
 
 
 def coup_a_jouer(l):
-    l2 = []
+    l2 = [0]
     k = 0
     mini = -inf
-
+    
     for tup in l:
-
+        
         score = tup[1]
-
+        
         if score > mini:
-            if l2 != []:
+            if l2!= []:
                 colone_a_jouer = l2[-1]
                 mini = score
-
+ 
+    
+ 
+        
         k = k + 1
         l2.append(k)
+        
+    
+        
+    
+    return (colone_a_jouer, mini)
 
-    return colone_a_jouer
+
+
+def check_coup_a_jouer(tup, depth, grid):
+    colone, mini = tup
+    i = 0
+
+    if mini == -10000:
+        while mini == -10000:
+            
+            #print('arrivé')
+            l = alphabeta(grid, depth - i, -inf, inf, True, depth - i)
+            
+            #print(i, mini)
+            colone, mini = coup_a_jouer(l)
+            i = i + 1
+    
+
+    
+    return colone
+
 
 
 def get_computer_play_column(difficulty, grid, is_player_red):
@@ -217,18 +256,21 @@ def get_computer_play_column(difficulty, grid, is_player_red):
     :return: La colonne jouée par l'ordinateur
     """
 
-    if is_player_red:
-        new_grid = numpy.zeros((6, 7))
-        for i in range(6):
-            for j in range(7):
-                if grid[i][j] == 1:
-                    new_grid[i][j] = 2
-                elif grid[i][j] == 2:
-                    new_grid[i][j] = 1
-        grid = new_grid
+    # if is_player_red:
+    #     new_grid = numpy.zeros((6, 7))
+    #     for i in range(6):
+    #         for j in range(7):
+    #             if grid[i][j] == 1:
+    #                 new_grid[i][j] = 2
+    #             elif grid[i][j] == 2:
+    #                 new_grid[i][j] = 1
+    #     grid = new_grid
 
     l = alphabeta(grid, difficulty, -inf, inf, True, difficulty)
-    x = coup_a_jouer(l)
+    #x = coup_a_jouer(l)
+    x = check_coup_a_jouer(coup_a_jouer(l), difficulty, grid)
+    print(x)
+    
     print("Grid:", grid)
     print("Computer playing in:", x)
     return x

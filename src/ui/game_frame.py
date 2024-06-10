@@ -129,7 +129,8 @@ class GameFrame(tk.Frame):
             return None
 
         (won, coordinates) = self.game.play(get_computer_play_column(self.difficulty, self.game.grid, self.game.is_player_red), False)
-
+        print(self.game.grid)
+        
         if coordinates is None:
             print(f"Computer play returned an invalid column {coordinates}")
             return None
