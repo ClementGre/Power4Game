@@ -2,6 +2,7 @@ import copy
 from math import inf
 
 import numpy
+import numpy as np
 
 
 def trouve_consecutifs(i, j, joueur, grid):
@@ -262,22 +263,22 @@ def alphabeta(node, depth, a, b, maximizingPlayer, n):
 def coup_a_jouer(l, grid):
     l2 = [0]
     k = 0
-    mini = -inf
-    
+    score = -inf
+
+    #print(len(l))
     for tup in l:
-        if grid[0, k] != 0:
-            l2.append(k)
-            k = k + 1
-        
-        else:
-            score = tup[1]
-            if score > mini:
-                if l2!= []:
-                    colone_a_jouer = l2[-1]
-                    mini = score
- 
-    
- 
+
+        maxi = tup[1]
+        #print(score, k)
+        if maxi > score:
+            #if l2 != []:
+            colone_a_jouer = l2[-1]
+            #print(colone_a_jouer)
+            score = maxi
+
+        if k + 1 < 6:
+            if grid[0, k + 1] != 0:
+                k = k + 1
         
         k = k + 1
         l2.append(k)
@@ -285,7 +286,7 @@ def coup_a_jouer(l, grid):
     
         
     
-    return (colone_a_jouer, mini)
+    return (colone_a_jouer, score)
 
 
 
@@ -298,15 +299,16 @@ def check_coup_a_jouer(tup, depth, grid):
             
             #print('arrivé')
             l = alphabeta(grid, depth - i, -inf, inf, True, depth - i)
+            print(f'{depth - i }')
             
             #print(i, mini)
             colone, mini = coup_a_jouer(l, grid)
+            print(mini)
             i = i + 1
     
     #print(mini)
     
     return colone
-
 
 
 
@@ -334,15 +336,16 @@ def get_computer_play_column(difficulty, grid, is_player_red):
     #     grid = new_grid
 
     
-    l = alphabeta(grid, 1, -inf, inf, True, 1)
-    coup_premier, mini = coup_a_jouer(l, grid)
-    if mini == 10000:
-        return coup_premier
+   #l = alphabeta(grid, 1, -inf, inf, True, 1)
+   #coup_premier, mini = coup_a_jouer(l, grid)
+   #if mini == 10000:
+   #    return coup_premier
 
 
     l = alphabeta(grid, difficulty, -inf, inf, True, difficulty)
     #x = coup_a_jouer(l)
     x = check_coup_a_jouer(coup_a_jouer(l, grid), difficulty, grid)
+
   
     
     print("Grid:", grid)
@@ -353,10 +356,37 @@ def get_computer_play_column(difficulty, grid, is_player_red):
     print("############################################")
     
     print(x)
-    
-    
-    
+
     
     
     print("Computer playing in:", x)
     return x
+
+
+
+# grid = [
+#     [0, 1, 0, 0, 0, 0, 0],
+#     [0, 2, 0, 2, 0, 0, 0],
+#     [0, 2, 1, 1, 0, 0, 0],
+#     [1, 2, 1, 2, 0, 0, 0],
+#     [2, 1, 1, 2, 1, 1, 0],
+#     [2, 2, 2, 1, 1, 1, 2]
+# ]
+#
+# grid = np.array(grid)
+# print(grid)
+# print("###################################################")
+# print(get_computer_play_column(3, grid, False))
+#
+
+
+
+
+
+
+
+
+
+
+
+
