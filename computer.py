@@ -92,7 +92,7 @@ def trouve_tout_les_consectifs2(grid, joueur):
                 else:
                    
 
-python
+
 
                     return l_consectifs_i_j
     return l
