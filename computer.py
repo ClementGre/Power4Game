@@ -90,10 +90,6 @@ def trouve_tout_les_consectifs2(grid, joueur):
                                 l.append(set(l_tups))
                             k = 0
                 else:
-                   
-
-
-
                     return l_consectifs_i_j
     return l
 
