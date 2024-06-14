@@ -1571,4 +1571,8 @@ french_first_names = (
 
 
 def generate_random_name():
+    """
+    Génère un couple prénom + nom aléatoire
+    :return: String de la concaténation nom + prénom.
+    """
     return random.choice(french_first_names).capitalize() + " " + random.choice(french_surnames).capitalize()

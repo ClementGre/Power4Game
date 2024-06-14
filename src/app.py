@@ -11,6 +11,9 @@ class App(tk.Tk):
     __slots__ = ['scoreboard', 'home_frame', 'game_frame']
 
     def __init__(self):
+        """
+        Initialise l'application Power4Game.
+        """
         super().__init__()
         self.title("Power4Game")
         self.geometry("900x600")
@@ -25,12 +28,21 @@ class App(tk.Tk):
         self.mainloop()
 
     def start_game(self, difficulty, player_name, is_player_red):
+        """
+        Démarre une nouvelle partie de Power4Game.
+        :param difficulty: difficulté du jeu
+        :param player_name: nom du joueur
+        :param is_player_red: True si le joueur joue avec les jetons rouges
+        """
         self.home_frame.destroy()
 
         self.game_frame = GameFrame(self, difficulty, player_name, is_player_red)
         self.game_frame.pack()
 
     def end_game(self):
+        """
+        Sauvegarde les scores et termine une partie de Power4Game.
+        """
         # Logique de récupération du score et de sauvegarde
         if self.game_frame.game.is_player_winner():
             score = calculate_score(self.game_frame.game.nb_played, self.game_frame.time, self.game_frame.difficulty)
@@ -39,7 +51,7 @@ class App(tk.Tk):
                                       self.game_frame.difficulty, self.game_frame.game.is_player_red, score,
                                       time.strftime("%d/%m/%Y %H:%M:%S"))
 
-        # Cleaning up the game frame
+        # Suppression du panneau de jeu
         self.home_frame = HomeFrame(self, self.game_frame.game.player_name)
         self.game_frame.destroy()
         self.home_frame.pack()

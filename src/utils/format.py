@@ -1,4 +1,9 @@
 def format_time_ms(time):
+    """
+    Formate le temps en millisecondes en une chaîne de caractères de la forme "MM:SS:MS".
+    :param time: Nombre de millisecondes écoulées.
+    :return: String formatée du temps écoulé.
+    """
     minutes = int(time / 60)
     seconds = int(time % 60)
 
