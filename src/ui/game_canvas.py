@@ -119,7 +119,7 @@ class GameCanvas(tk.Canvas):
 
     def computer_play(self):
         """
-        Gère le tour de jeu de l'ordinateur.
+        Fais jouer l'ordinateur.
         """
         played = self.game_frame.computer_play()
         if played is not None:

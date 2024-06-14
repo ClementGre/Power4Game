@@ -18,6 +18,9 @@ class StartFrame(tk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
+        """
+        Crée les widgets du panneau de démarrage.
+        """
         self.widgets.append(tk.Label(self, text="Welcome to Power4Game", font="Algerian 22 bold", fg="#2D323B"))
         self.widgets[-1].pack(pady=20)
 
@@ -49,11 +52,21 @@ class StartFrame(tk.Frame):
         self.widgets[-1].pack(side=tk.RIGHT, padx=10)
 
     def get_player_name(self):
+        """
+        Récupère le nom du joueur.
+        :return: Nom du joueur.
+        """
         player_name = self.player_name.get()
         return "Unknown" if player_name == "" else player_name
 
     def play_as_red(self):
+        """
+        Démarre le jeu en tant que joueur rouge.
+        """
         self.master.start_game(self.difficulty.get(), self.get_player_name(), True)
 
     def play_as_yellow(self):
+        """
+        Démarre le jeu en tant que joueur jaune.
+        """
         self.master.start_game(self.difficulty.get(), self.get_player_name(), False)

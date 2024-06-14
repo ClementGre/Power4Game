@@ -18,6 +18,9 @@ class ScoreboardFrame(tk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
+        """
+        Crée les widgets de la fenêtre du tableau des scores.
+        """
         # Create a title frame to keep the title fixed
         self.title_frame = tk.Frame(self, bg=bg)
         self.title_frame.pack(side=tk.TOP, pady=10)
@@ -66,6 +69,10 @@ class ScoreboardFrame(tk.Frame):
         self.draw_scores()
 
     def draw_scores(self, scores=None):
+        """
+        Actualise le tableau des scores à partir des scores passé en paramètre, et des paramètres de filtrage.
+        :param scores: Liste de tous les scores enregistrés.
+        """
         for widget in self.widgets:
             widget.destroy()
         self.widgets = []
@@ -94,6 +101,9 @@ class ScoreboardFrame(tk.Frame):
                 self.widgets.append(label)
 
     def update_scores(self):
+        """
+        Actualise les scores affichés en fonction des filtres de recherche.
+        """
         player_name = self.player_name_entry.get()
         difficulty = self.difficulty_entry.get()
         try:
@@ -106,6 +116,10 @@ class ScoreboardFrame(tk.Frame):
         self.draw_scores(scores=scores)
 
     def on_canvas_configure(self, event):
+        """
+        Met à jour la région de défilement et assure que le canevas remplit entièrement le cadre parent.
+        :param event: L'événement de configuration du canevas.
+        """
         # Update scroll region and ensure the canvas fills the entire parent frame
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
         self.canvas.itemconfig(self.scoreboard_frame_id, width=self.canvas.winfo_width())

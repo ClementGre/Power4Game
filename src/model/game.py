@@ -65,7 +65,8 @@ class Game:
 
         # Colonne
         for i in range(3):
-            if n == self.grid[i, column] == self.grid[i + 1, column] == self.grid[i + 2, column] == self.grid[i + 3, column]:
+            if n == self.grid[i, column] == self.grid[i + 1, column] == self.grid[i + 2, column] == self.grid[
+                i + 3, column]:
                 self.winner = n
                 return True, (row, column)
 
@@ -82,7 +83,7 @@ class Game:
         j = 0
         while (row + j) <= 5 and (column + j) <= 6 and (n == self.grid[row + j, column + j] == self.grid[row, column]):
             j += 1
-        if (i + j) >= 5 :
+        if (i + j) >= 5:
             self.winner = n
             return True, (row, column)
 
@@ -93,7 +94,7 @@ class Game:
         j = 0
         while (row + j) <= 5 and (column - j) >= 0 and (n == self.grid[row + j, column - j] == self.grid[row, column]):
             j += 1
-        if (i + j) >= 5 :
+        if (i + j) >= 5:
             self.winner = n
             return True, (row, column)
 
@@ -108,10 +109,21 @@ class Game:
         return self.nb_played == 42 or self.winner != 0
 
     def is_player_winner(self):
+        """
+        Vérifie si le joueur a gagné
+        :return: True si le joueur a gagné, False sinon
+        """
         return self.winner == 1 if self.is_player_red else self.winner == 2
 
     def is_computer_winner(self):
+        """
+        Vérifie si l'ordinateur a gagné
+        :return: True si l'ordinateur a gagné, False sinon
+        """
         return self.winner == 2 if self.is_player_red else self.winner == 1
 
     def resign(self):
+        """
+        Fait abandonner le joueur en le marquant comme perdant
+        """
         self.winner = 2 if self.is_player_red else 1
