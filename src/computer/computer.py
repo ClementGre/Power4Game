@@ -301,6 +301,9 @@ def check_coup_a_jouer(tup, depth, grid):
             l = alphabeta(grid, depth - i, -inf, inf, True, depth - i)
             colone, mini = coup_a_jouer(l, grid)
             i += 1
+    
+    #print(mini)
+    
     return colone
 
 

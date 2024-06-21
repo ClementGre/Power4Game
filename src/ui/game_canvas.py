@@ -199,7 +199,7 @@ class GameCanvas(tk.Canvas):
 
     def resign(self):
         """
-        Gère la démission du joueur.
+        Gère l'abandon du joueur.
         """
         self.arrow_visible = False
         self.update_arrow()
